@@ -1,20 +1,23 @@
 import {
-    Text,
+    HStack,
     FormControl,
     FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    Input
+    Input,
+    Center,
+    AbsoluteCenter,
+    Button
   } from '@chakra-ui/react'
 const SearchSummoner = () => {
     return (
-        <>
             <FormControl>
-                <FormLabel>Email address</FormLabel>
-                    <Input type='email' />
-                <FormHelperText>We'll never share your email.</FormHelperText>
+                <HStack>
+                    <FormLabel><Input variant={'filled'} placeholder='Enter In Game Name'></Input></FormLabel>
+                    <FormLabel><Input variant={'filled'} placeholder='Enter Tag'></Input></FormLabel>
+                </HStack>
+                <Button bg={'gray'}>
+                    Submit
+                </Button>
             </FormControl>
-        </>
     )
 };
 

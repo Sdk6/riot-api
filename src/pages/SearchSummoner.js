@@ -5,19 +5,62 @@ import {
     Input,
     Center,
     AbsoluteCenter,
+    Box,
     Button
   } from '@chakra-ui/react'
+import {useState} from "react"
 const SearchSummoner = () => {
+    const [inGameName, setInGameName] = useState("");
+    const [tag, setTag] = useState("");
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        const apiUrl = `${corsProxy}https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/sunn/na1?api_key=RGAPI-44ab4592-79f4-4cfd-9fa7-fb753f4840eb`;
+
+        const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+            "X-Riot-Token": "RGAPI-3b04f93a-3e25-4227-9203-c7af0df1d818"
+        }
+        });
+        const data = await response.json();
+        console.log('Response status:', response.status);
+    }
     return (
-            <FormControl>
-                <HStack>
-                    <FormLabel><Input variant={'filled'} placeholder='Enter In Game Name'></Input></FormLabel>
-                    <FormLabel><Input variant={'filled'} placeholder='Enter Tag'></Input></FormLabel>
-                </HStack>
-                <Button bg={'gray'}>
-                    Submit
-                </Button>
-            </FormControl>
+            <Center h="100vh">
+                <Box p="5" maxW="50vw"  borderRadius={"md"} borderWidth="1px" bg="black" >
+                <FormControl>
+                    <HStack>
+                        <FormLabel>
+                            <Input 
+                                id="inGameName"
+                                value={inGameName}
+                                bg={"white"}
+                                placeholder="Enter In Game Name"
+                                w="10vw"
+                                onChange={(e) => setInGameName(e.target.value)}
+                            />
+                        </FormLabel>
+                        <FormLabel>
+                            <Input 
+                                id="tag"
+                                value={tag}
+                                bg={"white"} 
+                                placeholder='Enter Tag' 
+                                w='6vw'
+                                onChange={(e) => setTag(e.target.value)}
+                            />
+                            
+                        </FormLabel>
+                    </HStack>
+                    <Button bg={'gray'} onClick={handleSubmit}>
+                        Search Summoner
+                    </Button>
+                </FormControl>
+                </Box>
+            </Center>
     )
 };
 

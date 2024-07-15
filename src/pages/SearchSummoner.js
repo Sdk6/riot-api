@@ -12,20 +12,19 @@ import {useState} from "react"
 const SearchSummoner = () => {
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
-    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-        const apiUrl = `${corsProxy}https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/sunn/na1?api_key=RGAPI-44ab4592-79f4-4cfd-9fa7-fb753f4840eb`;
+        const apiUrl = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/sunn/na1?api_key=RGAPI-44ab4592-79f4-4cfd-9fa7-fb753f4840eb`;
 
         const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
-            "X-Riot-Token": "RGAPI-3b04f93a-3e25-4227-9203-c7af0df1d818"
+            "api_key": "RGAPI-3b04f93a-3e25-4227-9203-c7af0df1d818"
         }
         });
-        const data = await response.json();
+        const text = await response.text();
+        console.log('Raw response:', text);
         console.log('Response status:', response.status);
     }
     return (

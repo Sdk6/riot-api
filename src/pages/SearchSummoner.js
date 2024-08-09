@@ -8,14 +8,14 @@ import {
     Box,
     Button
   } from '@chakra-ui/react'
-import {useState} from "react"
+import {useState, useEffect} from "react"
 const SearchSummoner = () => {
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const apiUrl = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/sunn/na1?api_key=RGAPI-44ab4592-79f4-4cfd-9fa7-fb753f4840eb`;
+        const apiUrl = ``;
 
         const response = await fetch(apiUrl, {
         method: "GET",

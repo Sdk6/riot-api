@@ -6,27 +6,29 @@ import {
     Center,
     AbsoluteCenter,
     Box,
-    Button
+    Button,
+    Text
   } from '@chakra-ui/react'
 import {useState, useEffect} from "react"
+
+
+
 const SearchSummoner = () => {
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        const apiUrl = ``;
+    const [message, setMessage] = useState("");
 
-        const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-            "api_key": "RGAPI-3b04f93a-3e25-4227-9203-c7af0df1d818"
+    const fetchHello = async () =>{
+        try {
+            const response = await fetch('/api/hello');
+            if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
+            const result = await response.json();
+            setMessage(result);
+        } catch(e) {
+            throw new Error("Something went wrong", e);
         }
-        });
-        const text = await response.text();
-        console.log('Raw response:', text);
-        console.log('Response status:', response.status);
     }
+
     return (
             <Center h="100vh">
                 <Box p="5" maxW="50vw"  borderRadius={"md"} borderWidth="1px" bg="black" >
@@ -54,10 +56,11 @@ const SearchSummoner = () => {
                             
                         </FormLabel>
                     </HStack>
-                    <Button bg={'gray'} onClick={handleSubmit}>
+                    <Button bg={'gray'} onClick={fetchHello}>
                         Search Summoner
                     </Button>
                 </FormControl>
+                {message}
                 </Box>
             </Center>
     )

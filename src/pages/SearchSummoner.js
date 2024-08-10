@@ -16,14 +16,15 @@ import {useState, useEffect} from "react"
 const SearchSummoner = () => {
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("butts");
 
     const fetchHello = async () =>{
         try {
             const response = await fetch('/api/hello');
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
-            setMessage(result);
+            console.log(result.message)
+            setMessage(result.message)
         } catch(e) {
             throw new Error("Something went wrong", e);
         }

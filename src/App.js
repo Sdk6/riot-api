@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import SearchSummoner from './pages/SearchSummoner.js';
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider bg="#ECC94B">
       <SearchSummoner />
     </ChakraProvider>
   );

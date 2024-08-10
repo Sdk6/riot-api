@@ -1,10 +1,9 @@
 import {
     HStack,
     FormControl,
-    FormLabel,
+    Select,
     Input,
     Center,
-    AbsoluteCenter,
     Box,
     Button,
     Text
@@ -14,56 +13,66 @@ import {useState, useEffect} from "react"
 
 
 const SearchSummoner = () => {
+    const [region, setRegion] = useState("americas");
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
     const [message, setMessage] = useState("butts");
 
     const fetchHello = async () =>{
+        console.log(`${region} ${inGameName} ${tag}`)
         try {
-            const response = await fetch('/api/hello');
+            const response = await fetch(`/api/account/${region}/${inGameName.toLowerCase()}/${tag.toLowerCase()}`);
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
-            console.log(result.message)
-            setMessage(result.message)
+            // setMessage(result.message)
+            console.log(result)
         } catch(e) {
             throw new Error("Something went wrong", e);
         }
     }
 
     return (
-            <Center h="100vh">
-                <Box p="5" maxW="50vw"  borderRadius={"md"} borderWidth="1px" bg="black" >
-                <FormControl>
-                    <HStack>
-                        <FormLabel>
-                            <Input 
-                                id="inGameName"
-                                value={inGameName}
-                                bg={"white"}
-                                placeholder="Enter In Game Name"
-                                w="10vw"
-                                onChange={(e) => setInGameName(e.target.value)}
-                            />
-                        </FormLabel>
-                        <FormLabel>
-                            <Input 
-                                id="tag"
-                                value={tag}
-                                bg={"white"} 
-                                placeholder='Enter Tag' 
-                                w='6vw'
-                                onChange={(e) => setTag(e.target.value)}
-                            />
-                            
-                        </FormLabel>
-                    </HStack>
-                    <Button bg={'gray'} onClick={fetchHello}>
-                        Search Summoner
+        <>
+        <Center>
+        <Box p="4" w="100vw" borderRadius="md" borderWidth="1px" bg="#4299e1">
+            <FormControl>
+                <HStack spacing="2" w="100%">
+                    <Select 
+                        w="10%" 
+                        id="region" 
+                        value={region}
+                        bg="white"
+                        onChange={(e) => setRegion(e.target.value)}>
+                        <option value="americas">NA</option>
+                        <option value="europe">Europe</option>
+                        <option value="asia">Asia</option>
+                        <option value="esports">Esports</option>
+                    </Select>
+                    <Input
+                        id="inGameName"
+                        value={inGameName}
+                        bg="white"
+                        placeholder="Enter In Game Name"
+                        w="50%"
+                        onChange={(e) => setInGameName(e.target.value)}
+                    />
+                    <Input
+                        id="tag"
+                        value={tag}
+                        bg="white"
+                        placeholder='Enter Tag'
+                        w='30%'
+                        onChange={(e) => setTag(e.target.value)}
+                    />
+                    <Button bg='gray' onClick={fetchHello} w="10%">
+                        Search
                     </Button>
-                </FormControl>
-                {message}
-                </Box>
-            </Center>
+                </HStack>
+            </FormControl>
+        </Box>
+    </Center>
+    {message}
+    </>
     )
 };
 

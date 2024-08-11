@@ -9,14 +9,14 @@ import {
     Text
   } from '@chakra-ui/react'
 import {useState, useEffect} from "react"
-
+import DisplaySummoner from './DisplaySummoner';
 
 
 const SearchSummoner = () => {
     const [region, setRegion] = useState("americas");
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
-    const [message, setMessage] = useState("butts");
+    const [data, setData] = useState(null);
 
     const fetchHello = async () =>{
         console.log(`${region} ${inGameName} ${tag}`)
@@ -26,6 +26,8 @@ const SearchSummoner = () => {
             const result = await response.json();
             // setMessage(result.message)
             console.log(result)
+            setData(result.puuid)
+            
         } catch(e) {
             throw new Error("Something went wrong", e);
         }
@@ -71,7 +73,7 @@ const SearchSummoner = () => {
             </FormControl>
         </Box>
     </Center>
-    {message}
+    <DisplaySummoner puuid={data} />
     </>
     )
 };

@@ -13,6 +13,7 @@ import DisplaySummoner from './DisplaySummoner';
 
 const SearchSummoner = () => {
     const [region, setRegion] = useState("americas");
+    const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
     const [data, setData] = useState(null);
@@ -20,7 +21,7 @@ const SearchSummoner = () => {
     const fetchHello = async () =>{
         console.log(`${region} ${inGameName} ${tag}`)
         try {
-            const response = await fetch(`/api/account/${region}/${inGameName}/${tag}`);
+            const response = await fetch(`/api/account/${region}/${region2}/${inGameName}/${tag}`);
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
             // setMessage(result.message)

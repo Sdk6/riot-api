@@ -22,7 +22,6 @@ def hello():
 def get_account_by_name_and_tag(region,region2, gameName, tag):
     #Riot endpoint for accountv1 using name and tag
     accounts_url=f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tag}?"
-    summoner_url=f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/B1rhSEujJ244PfTsEpYltNYCRTWbh80QMjvGxS3wYkyyoaM8Z_D0C7m19WsBcxzgndaJ7O_HU4vKHg?api_key=RGAPI-6bf1a594-60b9-4b7d-953f-3294a05ce7b8"
     headers={
         "X-Riot-Token": api_key
     }
@@ -32,7 +31,12 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         accounts_response = requests.get(accounts_url, headers=headers)
         accounts_response.raise_for_status()
         app.logger.info(f"accounts response status code: {accounts_response.status_code}")
-
+        accounts_data=accounts_response.json()
+        #summoner-v4 endpoint for id's
+        summoners_url=f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}"
+        summoners_response = requests.get(summoners_url, headers=headers)
+        summoners_response.raise_for_status()
+        app.logger.info(summoners_response.json())
 
 
         return jsonify(accounts_response.json())

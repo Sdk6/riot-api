@@ -5,10 +5,9 @@ import {
     Input,
     Center,
     Box,
-    Button,
-    Text
+    Button
   } from '@chakra-ui/react'
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
 
@@ -21,7 +20,7 @@ const SearchSummoner = () => {
     const fetchHello = async () =>{
         console.log(`${region} ${inGameName} ${tag}`)
         try {
-            const response = await fetch(`/api/account/${region}/${inGameName.toLowerCase()}/${tag.toLowerCase()}`);
+            const response = await fetch(`/api/account/${region}/${inGameName}/${tag}`);
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
             // setMessage(result.message)

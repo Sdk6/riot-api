@@ -1,15 +1,9 @@
 import {
-    HStack,
-    FormControl,
-    Select,
-    Input,
-    Center,
     Box,
-    Button,
     Text,
     Flex
   } from '@chakra-ui/react'
-import {useState, useEffect} from "react"
+// import {useState, useEffect} from "react"
 import SummonerIcon from './SummonerIcon'
 const DisplaySummoner = ({puuid}) => {
 
@@ -20,7 +14,7 @@ const DisplaySummoner = ({puuid}) => {
             </Box>
             <Box>
                 <Text>
-                puuid: {puuid}
+                    puuid: {puuid}
                 </Text>
             </Box>
         </Flex>

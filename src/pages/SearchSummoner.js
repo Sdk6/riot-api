@@ -16,7 +16,8 @@ const SearchSummoner = () => {
     const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
-    const [data, setData] = useState(null);
+    const [inputInGameName, setInputInGameName] = useState("");
+    const [inputTag, setInputTag] = useState("");
     const [summonerIcon, setSummonerIcon] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccessful, setIsSuccessful] = useState(false);
@@ -26,17 +27,17 @@ const SearchSummoner = () => {
         setIsLoading(true);
         setIsSuccessful(false);
         try {
-            const response = await fetch(`/api/account/${region}/${region2}/${inGameName}/${tag}`);
+            const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName}/${inputTag}`);
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
-            // setMessage(result.message)
             console.log(result);
-            setData(result.puuid);
             setSummonerIcon(result.profileIconId);
             setIsSuccessful(true);
+            setInGameName(inputInGameName);
+            setTag(inputTag);
         } catch(e) {
-            throw new Error("Something went wrong", e);
             setIsSuccessful(false);
+            throw new Error("Something went wrong", e);
         } finally {
             setIsLoading(false);
         }
@@ -61,19 +62,19 @@ const SearchSummoner = () => {
                     </Select>
                     <Input
                         id="inGameName"
-                        value={inGameName}
+                        value={inputInGameName}
                         bg="white"
                         placeholder="Enter In Game Name"
                         w="50%"
-                        onChange={(e) => setInGameName(e.target.value)}
+                        onChange={(e) => setInputInGameName(e.target.value)}
                     />
                     <Input
                         id="tag"
-                        value={tag}
+                        value={inputTag}
                         bg="white"
                         placeholder='Enter Tag'
                         w='30%'
-                        onChange={(e) => setTag(e.target.value)}
+                        onChange={(e) => setInputTag(e.target.value)}
                     />
                     <Button bg='gray' onClick={fetchHello} w="10%">
                         Search

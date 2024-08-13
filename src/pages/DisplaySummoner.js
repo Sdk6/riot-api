@@ -5,12 +5,12 @@ import {
   } from '@chakra-ui/react'
 // import {useState, useEffect} from "react"
 import SummonerIcon from './SummonerIcon'
-const DisplaySummoner = ({summoner, summonerIcon}) => {
+const DisplaySummoner = ({summoner, summonerIcon, summonerLevel}) => {
 
     return (
         <Flex bg="gray">
             <Box>
-                <SummonerIcon summonerIcon={summonerIcon}/>
+                <SummonerIcon summonerIcon={summonerIcon} summonerLevel={summonerLevel}/>
             </Box>
             <Box>
                 <Text>

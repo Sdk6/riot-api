@@ -19,6 +19,7 @@ const SearchSummoner = () => {
     const [inputInGameName, setInputInGameName] = useState("");
     const [inputTag, setInputTag] = useState("");
     const [summonerIcon, setSummonerIcon] = useState("");
+    const [summonerLevel, setSummonerLevel] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccessful, setIsSuccessful] = useState(false);
 
@@ -32,6 +33,7 @@ const SearchSummoner = () => {
             const result = await response.json();
             console.log(result);
             setSummonerIcon(result.profileIconId);
+            setSummonerLevel(result.summonerLevel);
             setIsSuccessful(true);
             setInGameName(inputInGameName);
             setTag(inputTag);
@@ -85,7 +87,11 @@ const SearchSummoner = () => {
     </Center>
     {isLoading && <p>Loading...</p>}
     {!isLoading && isSuccessful && (
-        <DisplaySummoner summoner={`${inGameName} #${tag}`} summonerIcon={summonerIcon}/>
+        <DisplaySummoner 
+            summoner={`${inGameName} #${tag}`} 
+            summonerIcon={summonerIcon}
+            summonerLevel={summonerLevel}
+            />
     )}
     </>
     )

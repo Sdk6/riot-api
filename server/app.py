@@ -46,8 +46,15 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         masteries_response.raise_for_status()
         masteries_data = masteries_response.json()
         #app.logger.info(masteries_response.json())
-        for key in masteries_data:
-            app.logger.info(key['championId'])
+        # for key in masteries_data:
+        #     app.logger.info(key['championId'])
+
+        #rank
+        ranks_url=f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summoners_data['id']}"
+        ranks_response = requests.get(ranks_url, headers=headers)
+        ranks_response.raise_for_status()
+        ranks_data = ranks_response.json()
+        app.logger.info(ranks_data)
 
         return jsonify(summoners_data)
     except requests.exceptions.RequestException as e:

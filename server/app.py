@@ -39,7 +39,7 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         app.logger.info(summoners_response.json())
 
 
-        return jsonify(accounts_response.json())
+        return jsonify(summoners_response.json())
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 

@@ -17,6 +17,7 @@ const SearchSummoner = () => {
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
     const [data, setData] = useState(null);
+    const [summonerIcon, setSummonerIcon]=useState("");
 
     const fetchHello = async () =>{
         console.log(`${region} ${inGameName} ${tag}`)
@@ -27,6 +28,7 @@ const SearchSummoner = () => {
             // setMessage(result.message)
             console.log(result)
             setData(result.puuid)
+            setSummonerIcon(result.profileIconId)
             
         } catch(e) {
             throw new Error("Something went wrong", e);
@@ -73,7 +75,7 @@ const SearchSummoner = () => {
             </FormControl>
         </Box>
     </Center>
-    <DisplaySummoner puuid={data} />
+    <DisplaySummoner puuid={`${inGameName} #${tag}`} summonerIcon={summonerIcon}/>
     </>
     )
 };

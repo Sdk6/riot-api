@@ -17,21 +17,28 @@ const SearchSummoner = () => {
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
     const [data, setData] = useState(null);
-    const [summonerIcon, setSummonerIcon]=useState("");
+    const [summonerIcon, setSummonerIcon] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccessful, setIsSuccessful] = useState(false);
 
     const fetchHello = async () =>{
-        console.log(`${region} ${inGameName} ${tag}`)
+        console.log(`${region} ${inGameName} ${tag}`);
+        setIsLoading(true);
+        setIsSuccessful(false);
         try {
             const response = await fetch(`/api/account/${region}/${region2}/${inGameName}/${tag}`);
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
             // setMessage(result.message)
-            console.log(result)
-            setData(result.puuid)
-            setSummonerIcon(result.profileIconId)
-            
+            console.log(result);
+            setData(result.puuid);
+            setSummonerIcon(result.profileIconId);
+            setIsSuccessful(true);
         } catch(e) {
             throw new Error("Something went wrong", e);
+            setIsSuccessful(false);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -75,7 +82,10 @@ const SearchSummoner = () => {
             </FormControl>
         </Box>
     </Center>
-    <DisplaySummoner puuid={`${inGameName} #${tag}`} summonerIcon={summonerIcon}/>
+    {isLoading && <p>Loading...</p>}
+    {!isLoading && isSuccessful && (
+        <DisplaySummoner summoner={`${inGameName} #${tag}`} summonerIcon={summonerIcon}/>
+    )}
     </>
     )
 };

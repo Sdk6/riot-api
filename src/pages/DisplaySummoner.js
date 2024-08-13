@@ -5,7 +5,7 @@ import {
   } from '@chakra-ui/react'
 // import {useState, useEffect} from "react"
 import SummonerIcon from './SummonerIcon'
-const DisplaySummoner = ({puuid, summonerIcon}) => {
+const DisplaySummoner = ({summoner, summonerIcon}) => {
 
     return (
         <Flex bg="gray">
@@ -14,7 +14,7 @@ const DisplaySummoner = ({puuid, summonerIcon}) => {
             </Box>
             <Box>
                 <Text>
-                    puuid: {puuid}
+                    {summoner}
                 </Text>
             </Box>
         </Flex>

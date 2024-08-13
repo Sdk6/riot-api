@@ -31,15 +31,25 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         accounts_response = requests.get(accounts_url, headers=headers)
         accounts_response.raise_for_status()
         app.logger.info(f"accounts response status code: {accounts_response.status_code}")
-        accounts_data=accounts_response.json()
+        accounts_data = accounts_response.json()
+
         #summoner-v4 endpoint for id's
         summoners_url=f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}"
         summoners_response = requests.get(summoners_url, headers=headers)
         summoners_response.raise_for_status()
-        app.logger.info(summoners_response.json())
+        summoners_data = summoners_response.json()
+        #app.logger.info(summoners_response.json())
 
+        #masteries
+        masteries_url=f"https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${accounts_data['puuid']}/top"
+        masteries_response = requests.get(masteries_url, headers=headers)
+        masteries_response.raise_for_status()
+        masteries_data = masteries_response.json()
+        #app.logger.info(masteries_response.json())
+        for key in masteries_data:
+            app.logger.info(key['championId'])
 
-        return jsonify(summoners_response.json())
+        return jsonify(summoners_data)
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 

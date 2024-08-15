@@ -8,7 +8,7 @@ import SummonerIcon from './SummonerIcon'
 const DisplaySummoner = ({summoner, summonerIcon, summonerLevel}) => {
 
     return (
-        <Flex bg="gray" width="100%">
+        <Flex bg="gray" align={"center"}>
             <Box>
                 <SummonerIcon summonerIcon={summonerIcon} summonerLevel={summonerLevel}/>
             </Box>

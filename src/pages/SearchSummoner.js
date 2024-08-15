@@ -47,8 +47,7 @@ const SearchSummoner = () => {
 
     return (
         <>
-        <Center>
-        <Box p="4" w="100vw" borderRadius="md" borderWidth="1px" bg="#4299e1">
+        <Box alignContent="center" w="100vw" h="6vh" bg="#4299e1">
             <FormControl>
                 <HStack spacing="2" w="100%">
                     <Select 
@@ -84,7 +83,6 @@ const SearchSummoner = () => {
                 </HStack>
             </FormControl>
         </Box>
-    </Center>
     {isLoading && <p>Loading...</p>}
     {!isLoading && isSuccessful && (
         <DisplaySummoner 

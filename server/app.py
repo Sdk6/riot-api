@@ -54,8 +54,14 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         ranks_response = requests.get(ranks_url, headers=headers)
         ranks_response.raise_for_status()
         ranks_data = ranks_response.json()
-        app.logger.info(ranks_data)
+        #app.logger.info(ranks_data)
 
+        #matches
+        matches_url=f"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{accounts_data['puuid']}/ids?start=0&count=20"
+        matches_response = requests.get(matches_url, headers=headers)
+        matches_response.raise_for_status()
+        matches_data = matches_response.json()
+        app.logger.info(matches_data)
         return jsonify(summoners_data)
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500

@@ -18,6 +18,22 @@ db = client.python_riot_api
 def hello():
     return jsonify(message="Hello from python server!")
 
+def get_championIds():
+    try:
+        version_url='https://ddragon.leagueoflegends.com/api/versions.json'
+        version_response=requests.get(version_url)
+        version_response.raise_for_status()
+        version = version_response.json()
+        latest_version = version[0]
+
+        champions_url=f"https://ddragon.leagueoflegends.com/cdn/${latest_version}/data/en_US/champion.json"
+        champions_response=requests.get(champions_url)
+        champions_response.raise_for_status()
+        champions_data=champions_response.json()
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')
 def get_account_by_name_and_tag(region,region2, gameName, tag):
     #Riot endpoint for accountv1 using name and tag

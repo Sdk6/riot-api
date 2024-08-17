@@ -88,6 +88,7 @@ const SearchSummoner = () => {
             summoner={`${inGameName} #${tag}`} 
             summonerIcon={summonerIcon}
             summonerLevel={summonerLevel}
+            region={region2}
             />
     )}
     </>

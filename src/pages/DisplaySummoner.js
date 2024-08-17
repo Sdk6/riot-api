@@ -1,18 +1,23 @@
 import {
     Box,
     Text,
-    Flex
+    Flex,
+    Spacer
   } from '@chakra-ui/react'
 // import {useState, useEffect} from "react"
 import SummonerIcon from './SummonerIcon'
-const DisplaySummoner = ({summoner, summonerIcon, summonerLevel}) => {
+const DisplaySummoner = ({summoner, summonerIcon, summonerLevel, region}) => {
 
     return (
-        <Flex bg="gray" align={"center"}>
-            <Box>
+        <Flex bg="blackAlpha.900">
+            <Box align="center">
                 <SummonerIcon summonerIcon={summonerIcon} summonerLevel={summonerLevel}/>
             </Box>
-            <Box>
+            <Spacer maxW="2.5%"/>
+            <Box color="orange.50" mt="1.5%">
+                <Text fontSize="3xl">
+                    {region.toUpperCase()}
+                </Text>
                 <Text>
                     {summoner}
                 </Text>

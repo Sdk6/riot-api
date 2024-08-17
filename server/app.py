@@ -81,7 +81,7 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         ranked_tiers={}
         for item in ranks_data:
             if item['queueType'] in ['RANKED_FLEX_SR', 'RANKED_SOLO_5x5']:
-                ranked_tiers[item['queueType']]= f"{item['tier']} {item['rank']}"
+                ranked_tiers[item['queueType']]= f"{item['tier']} {item['rank']} {item['leaguePoints']}LP"
         #app.logger.info(ranks_data)
 
         #matches
@@ -91,15 +91,17 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         matches_data = matches_response.json()
         #app.logger.info(matches_data)
         response_data = {
+            'summonerLevel': summoners_data['summonerLevel'],
             'ids': {
                 'puuid': summoners_data['puuid'],
                 'summonerId': summoners_data['id'],
                 'accountId': summoners_data['accountId'],
                 'profileIconId': summoners_data['profileIconId']
             },
-            'summonerLevel': summoners_data['summonerLevel'],
-            'rankedSolo5v5': ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
-            'rankedFlex5v5': ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
+            'ranks':{
+                'rankedSolo5v5': ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
+                'rankedFlex5v5': ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
+            }
         }
         return jsonify(response_data)
         #return jsonify(summoners_data)

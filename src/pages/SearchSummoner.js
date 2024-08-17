@@ -31,7 +31,7 @@ const SearchSummoner = () => {
             if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
             const result = await response.json();
             console.log(result);
-            setSummonerIcon(result.profileIconId);
+            setSummonerIcon(result.ids.profileIconId);
             setSummonerLevel(result.summonerLevel);
             setIsSuccessful(true);
             setInGameName(inputInGameName);
@@ -46,7 +46,7 @@ const SearchSummoner = () => {
 
     return (
         <>
-        <Box alignContent="center" w="100vw" h="6vh" bg="#4299e1">
+        <Box alignContent="center" minW="100vw" minH="6vh" bg="#4299e1">
             <FormControl>
                 <HStack spacing="2" w="100%">
                     <Select 

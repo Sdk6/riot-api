@@ -18,8 +18,8 @@ const DisplaySummoner = ({summoner, summonerIcon, summonerLevel, region}) => {
                 <Text fontSize="3xl">
                     {region.toUpperCase()}
                 </Text>
-                <Text>
-                    {summoner}
+                <Text fontSize="2xl">
+                    {summoner.toUpperCase()}
                 </Text>
             </Box>
         </Flex>

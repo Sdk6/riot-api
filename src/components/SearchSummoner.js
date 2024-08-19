@@ -10,7 +10,7 @@ import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
 
-const SearchSummoner = () => {
+const SearchSummoner = ({handleSearchResult}) => {
     const [region, setRegion] = useState("americas");
     const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
@@ -36,6 +36,7 @@ const SearchSummoner = () => {
             setIsSuccessful(true);
             setInGameName(inputInGameName);
             setTag(inputTag);
+            handleSearchResult(result.ids.puuid,result.ids.summonerId);
         } catch(e) {
             setIsSuccessful(false);
             throw new Error("Something went wrong", e);

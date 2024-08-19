@@ -10,7 +10,7 @@ import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
 
-const SearchSummoner = ({handleSearchResult}) => {
+const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingStart, successfulFalse }) => {
     const [region, setRegion] = useState("americas");
     const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
@@ -19,30 +19,27 @@ const SearchSummoner = ({handleSearchResult}) => {
     const [inputTag, setInputTag] = useState("");
     const [summonerIcon, setSummonerIcon] = useState("");
     const [summonerLevel, setSummonerLevel] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [isSuccessful, setIsSuccessful] = useState(false);
 
     const fetchHello = async () =>{
         console.log(`${region} ${inGameName} ${tag}`);
-        setIsLoading(true);
-        setIsSuccessful(false);
+        loadingStart();
+        successfulFalse();
         try {
             const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName}/${inputTag}`);
-            if (!response.ok) throw new Error("Error reaching /api/hello ", response.status);
+            if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
             const result = await response.json();
             console.log(result);
             setSummonerIcon(result.ids.profileIconId);
             setSummonerLevel(result.summonerLevel);
-            setIsSuccessful(true);
             setInGameName(inputInGameName);
             setTag(inputTag);
             handleSearchResult(result.ids.puuid,result.ids.summonerId);
         } catch(e) {
-            setIsSuccessful(false);
+            successfulFalse();
             throw new Error("Something went wrong", e);
-        } finally {
-            setIsLoading(false);
-        }
+        } //finally {
+        //     loadingEnd();
+        // }
     }
 
     return (
@@ -83,7 +80,13 @@ const SearchSummoner = ({handleSearchResult}) => {
                 </HStack>
             </FormControl>
         </Box>
-    {isLoading && <p>Loading...</p>}
+    {isLoading && <Button
+                    isLoading
+                    loadingText='Loading'
+                    colorScheme='teal'
+                    variant='outline'
+                    />
+    }
     {!isLoading && isSuccessful && (
         <DisplaySummoner 
             summoner={`${inGameName} #${tag}`} 

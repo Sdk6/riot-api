@@ -47,7 +47,7 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
     headers={
         "X-Riot-Token": api_key
     }
-    temp = get_championIds()
+    #temp = get_championIds()
     #app.logger.info(temp)
     try:
         #account-v1 endpoint gamename and tag to get puuid
@@ -63,18 +63,38 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         summoners_data = summoners_response.json()
         #app.logger.info(summoners_response.json())
 
+        response_data = {
+            'summonerLevel': summoners_data['summonerLevel'],
+            'ids': {
+                'puuid': summoners_data['puuid'],
+                'summonerId': summoners_data['id'],
+                'accountId': summoners_data['accountId'],
+                'profileIconId': summoners_data['profileIconId']
+            }
+        }
+        return jsonify(response_data)
+        #return jsonify(summoners_data)
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/summonerinfo/<puuid>/<summonerId>')
+def get_summoner_rank_masteries_match_history(puuid, summonerId):
+    headers={
+        "X-Riot-Token": api_key
+    }
+    try: 
         #masteries
-        masteries_url=f"https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{accounts_data['puuid']}/top"
+        masteries_url=f"https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top"
         masteries_response = requests.get(masteries_url, headers=headers)
         masteries_response.raise_for_status()
         masteries_data = masteries_response.json()
-        # app.logger.info(masteries_response.json())
+        #app.logger.info(masteries_response.json())
         for key in masteries_data:
             app.logger.info(key['championId'])
             app.logger.info(key['championLevel'])
 
         #rank
-        ranks_url=f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summoners_data['id']}"
+        ranks_url=f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}"
         ranks_response = requests.get(ranks_url, headers=headers)
         ranks_response.raise_for_status()
         ranks_data = ranks_response.json()
@@ -85,26 +105,19 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         #app.logger.info(ranks_data)
 
         #matches
-        matches_url=f"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{accounts_data['puuid']}/ids?start=0&count=20"
+        matches_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=20"
         matches_response = requests.get(matches_url, headers=headers)
         matches_response.raise_for_status()
         matches_data = matches_response.json()
         #app.logger.info(matches_data)
-        response_data = {
-            'summonerLevel': summoners_data['summonerLevel'],
-            'ids': {
-                'puuid': summoners_data['puuid'],
-                'summonerId': summoners_data['id'],
-                'accountId': summoners_data['accountId'],
-                'profileIconId': summoners_data['profileIconId']
-            },
-            'ranks':{
-                'rankedSolo5v5': ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
-                'rankedFlex5v5': ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
+
+        response_data={
+            "ranks": {
+                "soloqueue": ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
+                "flexqueue": ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
             }
         }
         return jsonify(response_data)
-        #return jsonify(summoners_data)
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 

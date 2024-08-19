@@ -15,10 +15,10 @@ const DisplaySummoner = ({summoner, summonerIcon, summonerLevel, region}) => {
             </Box>
             <Spacer maxW="2.5%"/>
             <Box color="orange.50" mt="1.5%" fontFamily="nunito">
-                <Text fontSize="3xl">
+                <Text fontSize="4xl">
                     {region.toUpperCase()}
                 </Text>
-                <Text fontSize="2xl">
+                <Text fontSize="3xl">
                     {summoner.toUpperCase()}
                 </Text>
             </Box>

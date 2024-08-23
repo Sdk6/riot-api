@@ -99,6 +99,7 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
             mastery_level= str(key['championLevel'])
             champion_masteries.append({champion: mastery_level})
         #app.logger.info(masteries_response)
+        response_data['masteries']=champion_masteries
     
         #rank
         ranks_url=f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}"

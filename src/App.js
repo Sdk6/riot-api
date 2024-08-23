@@ -67,6 +67,7 @@ function App() {
         summonerInfo={summonerInfo}
         summonerSoloqueue={summonerSoloqueue}
         summonerFlexqueue={summonerFlexqueue}
+        summonerMasteries={summonerMasteries}
         />
       {summonerInfo.found &&(
       <DisplaySummonerInfo

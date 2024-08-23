@@ -11,7 +11,7 @@ import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
 
-const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerInfo, summonerSoloqueue, summonerFlexqueue }) => {
+const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerInfo, summonerSoloqueue, summonerFlexqueue, summonerMasteries }) => {
     const [region, setRegion] = useState("americas");
     const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
@@ -50,8 +50,10 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                 throw new Error("Error reaching /api/summoner ", response.status);
             }
             const result = await response.json();
+            console.log(result);
             summonerSoloqueue(result.ranks.soloqueue);
             summonerFlexqueue(result.ranks.flexqueue);
+            summonerMasteries(result.masteries)
         } catch (e) {
             successfulFalse();
             console.error(e);

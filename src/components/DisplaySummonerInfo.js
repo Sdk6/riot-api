@@ -7,6 +7,7 @@ import{
 import { useEffect, useState, useCallback } from 'react';
 import SoloqueueInfo from './SoloqueueInfo';
 import FlexqueueInfo from './FlexqueueInfo';
+import MasteryInfo from './MasteryInfo';
 const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful, successfulTrue, successfulFalse}) => {
     // const fetchSummonerData = async () => {
     //     const response = await fetch(`/api/summonerinfo/${puuid}/${summonerId}`);
@@ -53,7 +54,7 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful, successfulT
                 <Box bg="gray" w="34.5%">
                     <SoloqueueInfo rank={summonerInfo.soloqueue}/>
                     <FlexqueueInfo rank={summonerInfo.flexqueue}/>
-                    
+                    <MasteryInfo masteries={summonerInfo.masteries}/>
                 </Box>
                 <Spacer w="1%" />
                 <Box bg="red" w="64.5%">

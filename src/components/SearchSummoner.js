@@ -4,13 +4,14 @@ import {
     Select,
     Input,
     Box,
+    Center,
     Button
   } from '@chakra-ui/react'
 import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
 
-const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingStart, successfulFalse }) => {
+const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerInfo, summonerSoloqueue, summonerFlexqueue }) => {
     const [region, setRegion] = useState("americas");
     const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
@@ -22,8 +23,11 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingSta
 
     const fetchHello = async () =>{
         console.log(`${region} ${inGameName} ${tag}`);
-        loadingStart();
+        loadingTrue();
         successfulFalse();
+        summonerNotFound();
+        let sID = "";
+        let pID = "";
         try {
             const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName}/${inputTag}`);
             if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
@@ -34,12 +38,27 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingSta
             setInGameName(inputInGameName);
             setTag(inputTag);
             handleSearchResult(result.ids.puuid,result.ids.summonerId);
+            pID=result.ids.puuid;
+            sID=result.ids.summonerId;
         } catch(e) {
             successfulFalse();
             throw new Error("Something went wrong", e);
-        } //finally {
-        //     loadingEnd();
-        // }
+        }    
+        try {
+            const response = await fetch(`/api/summonerinfo/${pID}/${sID}`);
+            if (!response.ok) {
+                throw new Error("Error reaching /api/summoner ", response.status);
+            }
+            const result = await response.json();
+            summonerSoloqueue(result.ranks.soloqueue);
+            summonerFlexqueue(result.ranks.flexqueue);
+        } catch (e) {
+            successfulFalse();
+            console.error(e);
+        } finally {
+            loadingFalse();
+            successfulTrue();
+        };
     }
 
     return (
@@ -80,12 +99,12 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingSta
                 </HStack>
             </FormControl>
         </Box>
-    {isLoading && <Button
+    {isLoading && <Center><Button
                     isLoading
                     loadingText='Loading'
-                    colorScheme='teal'
-                    variant='outline'
-                    />
+                    colorScheme='#ECC94B'
+                    color="black"
+                    /></Center>
     }
     {!isLoading && isSuccessful && (
         <DisplaySummoner 

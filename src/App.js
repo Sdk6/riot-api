@@ -8,28 +8,49 @@ import { useState } from 'react';
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const [summonerFound, setSummonerFound] = useState(null);
-  const [summonerPuuid, setSummonerPuuid] = useState("");
-  const [summonerId, setSummonerId] = useState("");
+  const [summonerInfo, setSummonerInfo] = useState({
+    found: false,
+    puuid: "",
+    summonerId: "",
+    soloqueue: "",
+    flexqueue: "",
+    masteries: []
+  });
 
-  const loadingStart = () => {
-    setIsLoading(true);
+  const loadingTrue = () => setIsLoading(true);
+  const loadingFalse = () => setIsLoading(false);
+  const successfulTrue = () => setIsSuccessful(true);
+  const successfulFalse = () => setIsSuccessful(false);
+  const summonerSoloqueue = (rank) => {
+    setSummonerInfo(prevState => ({
+      ...prevState,
+      soloqueue: rank
+    }));
   };
-  const loadingEnd = () => {
-    setIsLoading(false);
+  const summonerFlexqueue = (rank) => {
+    setSummonerInfo(prevState => ({
+      ...prevState,
+      flexqueue: rank
+    }));
   };
-
-  const successfulTrue = () => {
-    setIsSuccessful(true);
+  const summonerNotFound = () => {
+    setSummonerInfo(prevState => ({
+      ...prevState,
+      found: false
+    }));
   };
-  const successfulFalse = () => {
-    setIsSuccessful(false);
+  const summonerMasteries = (masteriesArray) => {
+    setSummonerInfo(prevState => ({
+      ...prevState,
+      masteries: masteriesArray
+    }));
   };
-
-  const handleSearchResult = (pId,sId) => {
-    setSummonerFound(true);
-    setSummonerPuuid(pId);
-    setSummonerId(sId);
+  const handleSearchResult = (pId, sId) => {
+    setSummonerInfo({
+      found: true,
+      puuid: pId,
+      summonerId: sId
+    });
   };
   return (
     <ChakraProvider bg="#ECC94B">
@@ -38,22 +59,24 @@ function App() {
         handleSearchResult={handleSearchResult}
         isLoading={isLoading}
         isSuccessful={isSuccessful}
-        loadingStart={loadingStart}
-        loadingEnd={loadingEnd}
-        successfulFalse={successfulFalse}
+        loadingTrue={loadingTrue}
+        loadingFalse={loadingFalse}
         successfulTrue={successfulTrue}
+        successfulFalse={successfulFalse}
+        summonerNotFound={summonerNotFound}
+        summonerInfo={summonerInfo}
+        summonerSoloqueue={summonerSoloqueue}
+        summonerFlexqueue={summonerFlexqueue}
         />
-      {summonerFound && summonerPuuid && summonerId &&
-      <DisplaySummonerInfo 
-        puuid={summonerPuuid} 
-        summonerId={summonerId}
+      {summonerInfo.found &&(
+      <DisplaySummonerInfo
+        summonerInfo={summonerInfo}
         isLoading={isLoading}
         isSuccessful={isSuccessful}
-        loadingStart={loadingStart}
-        loadingEnd={loadingEnd}
         successfulFalse={successfulFalse}
         successfulTrue={successfulTrue}
-        />}
+      />
+    )}
     </ChakraProvider>
   );
 }

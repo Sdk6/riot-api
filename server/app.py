@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 api_key = os.getenv('RIOT_API_KEY')
 mongodb_uri = os.getenv('MONGODB_URI')
-
 client = MongoClient(mongodb_uri)
 db = client.python_riot_api
 
@@ -47,8 +46,7 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
     headers={
         "X-Riot-Token": api_key
     }
-    #temp = get_championIds()
-    #app.logger.info(temp)
+
     try:
         #account-v1 endpoint gamename and tag to get puuid
         accounts_response = requests.get(accounts_url, headers=headers)
@@ -82,6 +80,12 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
     headers={
         "X-Riot-Token": api_key
     }
+    response_data={}
+    champIds={}
+    try:  
+        champIds= get_championIds()
+    except Exception as e:
+        app.logger.error(f"unable to fetch champ ids\nerror: {e}")
     try: 
         #masteries
         masteries_url=f"https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top"
@@ -89,10 +93,13 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
         masteries_response.raise_for_status()
         masteries_data = masteries_response.json()
         #app.logger.info(masteries_response.json())
+        champion_masteries=[]
         for key in masteries_data:
-            app.logger.info(key['championId'])
-            app.logger.info(key['championLevel'])
-
+            champion= champIds[str(key['championId'])]
+            mastery_level= str(key['championLevel'])
+            champion_masteries.append({champion: mastery_level})
+        #app.logger.info(masteries_response)
+    
         #rank
         ranks_url=f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}"
         ranks_response = requests.get(ranks_url, headers=headers)
@@ -102,21 +109,20 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
         for item in ranks_data:
             if item['queueType'] in ['RANKED_FLEX_SR', 'RANKED_SOLO_5x5']:
                 ranked_tiers[item['queueType']]= f"{item['tier']} {item['rank']} {item['leaguePoints']}LP"
-        #app.logger.info(ranks_data)
+        #app.logger.info(f"ranks api status: {ranks_response}")
 
         #matches
         matches_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=20"
         matches_response = requests.get(matches_url, headers=headers)
         matches_response.raise_for_status()
         matches_data = matches_response.json()
-        #app.logger.info(matches_data)
+        #app.logger.info(matches_response)
 
-        response_data={
-            "ranks": {
+        response_data["ranks"]={
                 "soloqueue": ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
                 "flexqueue": ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
-            }
-        }
+                }
+        #app.logger.info(f"masteries ")
         return jsonify(response_data)
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500

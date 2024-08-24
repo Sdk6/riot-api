@@ -17,7 +17,8 @@ const MasteryInfo = ({masteries}) => {
                         <Th>Masteries:</Th>
                     </Tr>  
                 </Thead>
-                <Tbody>
+                <Tbody>{/*TODO: use https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/{ChampionName}.png 
+                                    to display champion icons for mastery component. note: champion name is case senstive*/}
                     {masteries.map((champion, index) => {
                         const [championName, championValue] = Object.entries(champion)[0];
                         return (

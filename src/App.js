@@ -45,6 +45,12 @@ function App() {
       masteries: masteriesArray
     }));
   };
+  const summonerMatches = (matchesArray) => {
+    setSummonerInfo(prevState => ({
+      ...prevState,
+      matches: matchesArray
+    }));
+  };
   const handleSearchResult = (pId, sId) => {
     setSummonerInfo({
       found: true,
@@ -64,18 +70,16 @@ function App() {
         successfulTrue={successfulTrue}
         successfulFalse={successfulFalse}
         summonerNotFound={summonerNotFound}
-        summonerInfo={summonerInfo}
         summonerSoloqueue={summonerSoloqueue}
         summonerFlexqueue={summonerFlexqueue}
         summonerMasteries={summonerMasteries}
+        summonerMatches={summonerMatches}
         />
       {summonerInfo.found &&(
       <DisplaySummonerInfo
         summonerInfo={summonerInfo}
         isLoading={isLoading}
         isSuccessful={isSuccessful}
-        successfulFalse={successfulFalse}
-        successfulTrue={successfulTrue}
       />
     )}
     </ChakraProvider>

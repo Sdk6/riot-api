@@ -8,21 +8,20 @@ import {
     TableContainer
 } from "@chakra-ui/react"
 
-const MasteryInfo = ({masteries}) => {
+const MatchesInfo = ({matches}) => {
     return(
         <TableContainer>
             <Table variant="simple">
                 <Thead>
                     <Tr>
-                        <Th>Masteries:</Th>
+                        <Th>Recent Matches:</Th>
                     </Tr>  
                 </Thead>
                 <Tbody>
-                    {masteries.map((champion, index) => {
-                        const [championName, championValue] = Object.entries(champion)[0];
+                    {matches.map((matchId, index) => {
                         return (
                             <Tr key={index}>
-                                <Td>{championName}: {championValue}</Td>
+                                <Td>{matchId}</Td>
                             </Tr>
                         );
                     })}
@@ -32,4 +31,4 @@ const MasteryInfo = ({masteries}) => {
     )               
 }
 
-export default MasteryInfo;
+export default MatchesInfo;

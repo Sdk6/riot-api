@@ -4,11 +4,11 @@ import{
     Box,
     Text
 } from '@chakra-ui/react'
-import { useEffect, useState, useCallback } from 'react';
 import SoloqueueInfo from './SoloqueueInfo';
 import FlexqueueInfo from './FlexqueueInfo';
 import MasteryInfo from './MasteryInfo';
-const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful, successfulTrue, successfulFalse}) => {
+import MatchesInfo from './MatchesInfo';
+const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
     // const fetchSummonerData = async () => {
     //     const response = await fetch(`/api/summonerinfo/${puuid}/${summonerId}`);
     //     if (!response.ok) {
@@ -58,7 +58,7 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful, successfulT
                 </Box>
                 <Spacer w="1%" />
                 <Box bg="red" w="64.5%">
-                    {summonerInfo.summonerId}
+                    <MatchesInfo matches={summonerInfo.matches}/>
                 </Box>
             </Flex>
         )}

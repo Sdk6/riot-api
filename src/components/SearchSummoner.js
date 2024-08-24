@@ -11,7 +11,7 @@ import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
 
-const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerInfo, summonerSoloqueue, summonerFlexqueue, summonerMasteries }) => {
+const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerSoloqueue, summonerFlexqueue, summonerMasteries, summonerMatches }) => {
     const [region, setRegion] = useState("americas");
     const [region2, setRegion2] = useState("na1")
     const [inGameName, setInGameName] = useState("");
@@ -53,7 +53,8 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             console.log(result);
             summonerSoloqueue(result.ranks.soloqueue);
             summonerFlexqueue(result.ranks.flexqueue);
-            summonerMasteries(result.masteries)
+            summonerMasteries(result.masteries);
+            summonerMatches(result.matches);
         } catch (e) {
             successfulFalse();
             console.error(e);

@@ -122,7 +122,8 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
         response_data["ranks"]={
                 "soloqueue": ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
                 "flexqueue": ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
-                }
+        }
+        response_data["matches"]=matches_data
         #app.logger.info(f"masteries ")
         return jsonify(response_data)
     except requests.exceptions.RequestException as e:

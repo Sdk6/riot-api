@@ -35,8 +35,12 @@ function App() {
   };
   const summonerNotFound = () => {
     setSummonerInfo(prevState => ({
-      ...prevState,
-      found: false
+    found: false,
+    puuid: "",
+    summonerId: "",
+    soloqueue: "",
+    flexqueue: "",
+    masteries: []
     }));
   };
   const summonerMasteries = (masteriesArray) => {

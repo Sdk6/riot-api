@@ -16,18 +16,17 @@ const MasteryInfo = ({masteries}) => {
             <Table variant="simple">
                 <Thead>
                     <Tr>
-                        <Th>Masteries:</Th>
+                        <Th colSpan={masteries.length}>Masteries:</Th>
                     </Tr>  
                 </Thead>
-                <Tbody>{/*TODO: use https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/{ChampionName}.png 
-                                    to display champion icons for mastery component. note: champion name is case senstive*/}
+                <Tbody>
                     <Tr>    
-                        {masteries.map((champion, index) => {
+                        {masteries.map((champion) => {
                             const [championName, championValue] = Object.entries(champion)[0];
                             const championIcon = `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                             return (
-                                <Td key={index}>
-                                    <Box><Image src={championIcon} align="center"></Image></Box>
+                                <Td>
+                                    <Box><Image src={championIcon} align="center"   ></Image></Box>
                                     <Box>{championName}: {championValue}</Box>
                                 </Td>
                             );

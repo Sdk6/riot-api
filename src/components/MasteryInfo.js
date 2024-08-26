@@ -30,22 +30,24 @@ const MasteryInfo = ({masteries}) => {
                                 <Td key={championName}>
                                     <Flex direction="column" alignItems="center">
                                         <Image 
+                                            align="center"
                                             src={championIcon} 
-                                            borderRadius="full" 
+                                            borderRadius="25%" 
                                             boxSize="80px" 
                                             alt={championName}
-                                            mb={1}
+                                            mt={1}
                                         />
                                         <Box 
                                             bg='gray.700' 
-                                            py={1}
-                                            px={1}
+                                            p={.5}
+                                            bottom="1.2vh"
                                             boxShadow="outline"
                                             borderRadius="md"
-                                            width="40%"
-                                            textAlign="center"
+                                            width="25%"
+                                            position="relative"
+                                            textAlign={"center"}
                                         >
-                                            <Text fontWeight="bold" color="white" fontSize="sm">
+                                            <Text as="b" color="white" fontSize="sm">
                                                 {championValue}
                                             </Text>
                                         </Box>
@@ -60,4 +62,21 @@ const MasteryInfo = ({masteries}) => {
     )               
 }
 
+{/* <Image 
+                                            align="center"
+                                            src={championIcon} 
+                                            borderRadius="25%" 
+                                            boxSize="80px" 
+                                            alt={championName}
+                                            mt={1}
+                                        />
+                                        <Box 
+                                            bg='gray.700' 
+                                            py={1}
+                                            boxShadow="outline"
+                                            borderRadius="md"
+                                            width="31%"
+                                            position="relative"
+                                            textAlign={"center"}
+                                        > */}
 export default MasteryInfo;

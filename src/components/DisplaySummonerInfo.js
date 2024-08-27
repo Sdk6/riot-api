@@ -51,15 +51,16 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
         {isLoading && <p></p>}
         {!isLoading && isSuccessful && (
             <Flex mt=".5%" ml=".5%" mr=".5%">
-                <Box bg="gray.400" w="34.5%">
+                <Flex direction="column" bg="gray.400" w="34.5%" alignSelf="flex-start">
                     <SoloqueueInfo rank={summonerInfo.soloqueue}/>
                     <FlexqueueInfo rank={summonerInfo.flexqueue}/>
                     <MasteryInfo masteries={summonerInfo.masteries}/>
-                </Box>
+                    
+                </Flex>
                 <Spacer w="1%" />
-                <Box bg="gray.400" w="64.5%">
+                <Flex direction="column" bg="gray.400" w="64.5%">
                     <MatchesInfo matches={summonerInfo.matches}/>
-                </Box>
+                </Flex>
             </Flex>
         )}
         </>

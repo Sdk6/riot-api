@@ -8,7 +8,7 @@ import {
     TableContainer
 } from "@chakra-ui/react"
 
-const MatchesInfo = ({matches}) => {
+const MatchesInfo = ({matches=[]}) => {
     return(
         <TableContainer>
             <Table variant="simple">

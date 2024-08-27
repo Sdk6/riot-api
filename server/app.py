@@ -117,7 +117,13 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
         matches_response = requests.get(matches_url, headers=headers)
         matches_response.raise_for_status()
         matches_data = matches_response.json()
-        #app.logger.info(matches_response)
+        # app.logger.info(matches_data)
+
+        #match details
+        # match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{matches_data[0]}"
+        # match_response = requests.get(match_url, headers=headers)
+        # match_response.raise_for_status()
+        # app.logger.info(match_response.info.json())
 
         response_data["ranks"]={
                 "soloqueue": ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),

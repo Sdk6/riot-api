@@ -12,7 +12,7 @@ import {
     Flex
 } from "@chakra-ui/react"
 
-const MasteryInfo = ({masteries}) => {
+const MasteryInfo = ({masteries=[]}) => {
     return(
         <TableContainer>
             <Table variant="simple">

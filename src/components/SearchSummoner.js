@@ -3,7 +3,7 @@ import {
     FormControl,
     Select,
     Input,
-    Box,
+    Flex,
     Center,
     Button
   } from '@chakra-ui/react'
@@ -66,9 +66,9 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
 
     return (
         <>
-        <Box alignContent="center" minW="100vw" minH="6vh" bg="#4299e1">
+        <Flex alignItems="center" minH="6vh" bg="#4299e1" px="0.5%">
             <FormControl>
-                <HStack spacing="2" w="100%">
+                <HStack spacing="2" minW="100%">
                     <Select 
                         w="10%" 
                         id="region" 
@@ -101,7 +101,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                     </Button>
                 </HStack>
             </FormControl>
-        </Box>
+        </Flex>
     {isLoading && <Center><Button
                     isLoading
                     loadingText='Loading'

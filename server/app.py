@@ -46,7 +46,7 @@ def get_match_data(match_history, pId):
     }
     for match in match_history:
             i=0
-            data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False}
+            data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":""}
             match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
             match_response = requests.get(match_url, headers=headers)
             match_response.raise_for_status()
@@ -54,8 +54,10 @@ def get_match_data(match_history, pId):
             participants = match_data['info']
             for participant in participants['participants']:
                 player_info=f"{participant['riotIdGameName']} {participant['riotIdTagline']}"
-                if participant['puuid'] == pId and participant['win'] == True:
-                    data['Won']=True
+                if participant['puuid'] == pId:
+                    data['User']=participant['riotIdGameName']
+                    if participant['win'] == True:
+                        data['Won']=True
                 if participant['teamId']==100:
                     data['BlueTeam'].append(player_info)
                     if participant['win'] == True and not data['Winner']:

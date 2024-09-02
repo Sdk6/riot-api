@@ -39,6 +39,35 @@ def get_championIds():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
+def get_match_data(match_history, pId):
+    matches=[]
+    headers={
+        "X-Riot-Token": api_key
+    }
+    for match in match_history:
+            i=0
+            data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False}
+            match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
+            match_response = requests.get(match_url, headers=headers)
+            match_response.raise_for_status()
+            match_data = match_response.json()
+            participants = match_data['info']
+            for participant in participants['participants']:
+                player_info=f"{participant['riotIdGameName']} {participant['riotIdTagline']}"
+                if participant['puuid'] == pId and participant['win'] == True:
+                    data['Won']=True
+                if participant['teamId']==100:
+                    data['BlueTeam'].append(player_info)
+                    if participant['win'] == True and not data['Winner']:
+                        data['Winner']="BlueTeam"
+
+                else:
+                    data['RedTeam'].append(player_info)
+                    if participant['win'] == True and not data['Winner']:
+                        data['Winner']="RedTeam"
+            matches.append(data)
+    return matches
+
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')
 def get_account_by_name_and_tag(region,region2, gameName, tag):
     #Riot endpoint for accountv1 using name and tag
@@ -119,17 +148,14 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
         matches_data = matches_response.json()
         # app.logger.info(matches_data)
 
-        #match details
-        # match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{matches_data[0]}"
-        # match_response = requests.get(match_url, headers=headers)
-        # match_response.raise_for_status()
-        # app.logger.info(match_response.info.json())
+        # match details
+        matches=get_match_data(matches_data, puuid)
 
         response_data["ranks"]={
                 "soloqueue": ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),
                 "flexqueue": ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
         }
-        response_data["matches"]=matches_data
+        response_data["matches"]=matches
         #app.logger.info(f"masteries ")
         return jsonify(response_data)
     except requests.exceptions.RequestException as e:

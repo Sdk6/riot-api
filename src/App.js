@@ -63,7 +63,7 @@ function App() {
     });
   };
   return (
-    <ChakraProvider bg="#ECC94B">
+    <ChakraProvider>
       <Banner />
       <SearchSummoner 
         handleSearchResult={handleSearchResult}

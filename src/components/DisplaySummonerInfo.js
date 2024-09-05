@@ -53,7 +53,9 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
             <Flex mt=".5%" ml=".5%" mr=".5%">
                 <Flex direction="column" bg="gray.400" minW="34.5%" alignSelf="flex-start">
                     <SoloqueueInfo rank={summonerInfo.soloqueue}/>
+                    <Spacer bg="#648bee" pt={100}/>
                     <FlexqueueInfo rank={summonerInfo.flexqueue}/>
+                    <Spacer bg="#648bee" pt={100}/>
                     <MasteryInfo masteries={summonerInfo.masteries}/>
                     
                 </Flex>

@@ -21,7 +21,7 @@ const MatchesInfo = ({matches=[]}) => {
                     {matches.map((match, index) => {
                         const isUserOnWinningTeam = match.Won;
                         const userTeam = isUserOnWinningTeam ? match.Winner : (match.Winner === "BlueTeam" ? "RedTeam" : "BlueTeam");
-                        
+                        const user = match.User
                         // Define the background color based on win/loss
                         const bgColor = isUserOnWinningTeam ? "green.100" : "red.100";
 
@@ -31,7 +31,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 <strong>Blue Team:</strong>
                                 {match.BlueTeam.map((member, memberIndex) => (
                                 <div key={memberIndex} className={userTeam === "BlueTeam" ? "text-blue-600" : ""}>
-                                    {member}
+                                    {member === user ? <strong>{member}</strong> : member}
                                 </div>
                                 ))}
                             </Td>
@@ -39,7 +39,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 <strong>Red Team:</strong>
                                 {match.RedTeam.map((member, memberIndex) => (
                                 <div key={memberIndex} className={userTeam === "RedTeam" ? "text-red-600" : ""}>
-                                    {member}
+                                    {member === user ? <strong>{member}</strong> : member}
                                 </div>
                                 ))}
                             </Td>

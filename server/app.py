@@ -53,7 +53,7 @@ def get_match_data(match_history, pId):
             match_data = match_response.json()
             participants = match_data['info']
             for participant in participants['participants']:
-                player_info=f"{participant['riotIdGameName']} {participant['riotIdTagline']}"
+                player_info=participant['riotIdGameName']
                 if participant['puuid'] == pId:
                     data['User']=participant['riotIdGameName']
                     if participant['win'] == True:

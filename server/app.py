@@ -46,12 +46,24 @@ def get_match_data(match_history, pId):
     }
     for match in match_history:
             i=0
-            data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":""}
+            data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"", "GameType":""}
             match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
             match_response = requests.get(match_url, headers=headers)
             match_response.raise_for_status()
             match_data = match_response.json()
             participants = match_data['info']
+            if participants['gameMode'] == "CLASSIC":
+                if participants['queueId'] == 400:
+                    data['GameType']="NORMAL DRAFT 5v5"
+                elif participants['queueId'] == 420:
+                    data['GameType']="RANKED SOLO/DUO 5v5"
+                elif participants['queueId'] == 430:
+                    data['GameType']="NORMAL BLIND 5v5"
+                elif participants['queueId'] == 440:
+                    data['GameType']="RANKED FLEX 5v5"
+            else:    
+                data['GameType']=participants['gameMode']
+
             for participant in participants['participants']:
                 player_info=participant['riotIdGameName']
                 if participant['puuid'] == pId:

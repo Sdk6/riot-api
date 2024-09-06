@@ -42,7 +42,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             sID=result.ids.summonerId;
         } catch(e) {
             successfulFalse();
-            throw new Error("Something went wrong", e);
+            throw new Error("Summoner Not Found", e);
         }    
         try {
             const response = await fetch(`/api/summonerinfo/${pID}/${sID}`);

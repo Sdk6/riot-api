@@ -28,6 +28,9 @@ const MatchesInfo = ({matches=[]}) => {
                         return (
                             <Tr key={index} bg={bgColor}>
                             <Td>
+                                <strong>{match.GameType}</strong>
+                            </Td>
+                            <Td>
                                 <strong>Blue Team:</strong>
                                 {match.BlueTeam.map((member, memberIndex) => (
                                 <div key={memberIndex} className={userTeam === "BlueTeam" ? "text-blue-600" : ""}>

@@ -148,7 +148,7 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
         matches_response = requests.get(matches_url, headers=headers)
         matches_response.raise_for_status()
         matches_data = matches_response.json()
-        # app.logger.info(matches_data)
+        app.logger.info(matches_data)
 
         # match details
         matches=get_match_data(matches_data, puuid)

@@ -65,7 +65,9 @@ def get_match_data(match_history, pId):
                 data['GameType']=participants['gameMode']
 
             for participant in participants['participants']:
-                player_info=participant['riotIdGameName']
+                player_name=participant['riotIdGameName']
+                player_champion=participant['championName']
+                player_info={player_name: player_champion}
                 if participant['puuid'] == pId:
                     data['User']=participant['riotIdGameName']
                     if participant['win'] == True:

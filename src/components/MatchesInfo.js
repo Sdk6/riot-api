@@ -32,19 +32,37 @@ const MatchesInfo = ({matches=[]}) => {
                             </Td>
                             <Td>
                                 <strong>Blue Team:</strong>
-                                {match.BlueTeam.map((member, memberIndex) => (
-                                <div key={memberIndex} className={userTeam === "BlueTeam" ? "text-blue-600" : ""}>
-                                    {member === user ? <strong>{member}</strong> : member}
-                                </div>
-                                ))}
+                                {match.BlueTeam.map((memberObj, memberIndex) => {
+                                const [memberName, championName] = Object.entries(memberObj)[0];
+                                return (
+                                    <div key={memberIndex} className={userTeam === "BlueTeam" ? "text-blue-600" : ""}>
+                                        {memberName === user ? (
+                                            <strong>{memberName}</strong>
+                                        ) : (
+                                            memberName
+                                        )}
+                                        {" - "}
+                                        {championName}
+                                    </div>
+                                );
+                            })}
                             </Td>
                             <Td>
                                 <strong>Red Team:</strong>
-                                {match.RedTeam.map((member, memberIndex) => (
-                                <div key={memberIndex} className={userTeam === "RedTeam" ? "text-red-600" : ""}>
-                                    {member === user ? <strong>{member}</strong> : member}
-                                </div>
-                                ))}
+                                {match.RedTeam.map((memberObj, memberIndex) => {
+                                const [memberName, championName] = Object.entries(memberObj)[0];
+                                return (
+                                    <div key={memberIndex} className={userTeam === "RedTeam" ? "text-red-600" : ""}>
+                                        {memberName === user ? (
+                                            <strong>{memberName}</strong>
+                                        ) : (
+                                            memberName
+                                        )}
+                                        {" - "}
+                                        {championName}
+                                    </div>
+                                );
+                            })}
                             </Td>
                             <Td>Winner: {match.Winner}</Td>
                             </Tr>

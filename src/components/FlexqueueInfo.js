@@ -30,7 +30,7 @@ const FlexqueueInfo = ({rank}) => {
                         <Td>
                             <Flex  direction="column" alignItems="center">
                                 <Image src={rankIcon} boxSize="200px"></Image> 
-                                <Text>{rank}</Text>
+                                <Text as="b">{rank}</Text>
                             </Flex> 
                         </Td>
                     </Tr>

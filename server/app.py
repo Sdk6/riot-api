@@ -1,13 +1,20 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
+
+
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
 import requests
+import sys
+path = '/home/yourusername/mysite'
+if path not in sys/path:
+    sys.path.append(path)
 
 load_dotenv()
 
 app = Flask(__name__)
-
+CORS(app)
 api_key = os.getenv('RIOT_API_KEY')
 mongodb_uri = os.getenv('MONGODB_URI')
 client = MongoClient(mongodb_uri)
@@ -177,5 +184,3 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)

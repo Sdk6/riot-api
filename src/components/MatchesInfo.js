@@ -35,10 +35,10 @@ const MatchesInfo = ({matches=[]}) => {
                                 <strong>Blue Team:</strong>
                                 {match.BlueTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
-                                const champIcon=`https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
+                                const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
-                                    <Image src={champIcon} boxSize="9%" mr="2"/>
+                                    <Image src={champIcon} boxSize="6" mr="2"/>
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (
@@ -52,10 +52,11 @@ const MatchesInfo = ({matches=[]}) => {
                                 <strong>Red Team:</strong>
                                 {match.RedTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
-                                const champIcon=`https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
+                                //endpoint for fiddlesticks not working properly wtf
+                                const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
-                                    <Image src={champIcon} boxSize="9%" mr="2"/>
+                                    <Image src={champIcon} boxSize="6" mr="2"/>
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (

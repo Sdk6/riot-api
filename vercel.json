@@ -1,0 +1,5 @@
+{
+    "rewrites": [
+      { "source": "/api/(.*)", "destination": "https://skim61491.pythonanywhere.com/api/$1" }
+    ]
+  }

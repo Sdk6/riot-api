@@ -5,7 +5,9 @@ import {
     Tr,
     Th,
     Td,
-    TableContainer
+    TableContainer,
+    Image,
+    Flex
 } from "@chakra-ui/react"
 
 const MatchesInfo = ({matches=[]}) => {
@@ -17,10 +19,9 @@ const MatchesInfo = ({matches=[]}) => {
                         <Th colSpan={matches.length}>Recent Matches:</Th>
                     </Tr>  
                 </Thead>
-                <Tbody>{/*make a seperate component for each match for cleaner code*/}
+                <Tbody>
                     {matches.map((match, index) => {
                         const isUserOnWinningTeam = match.Won;
-                        const userTeam = isUserOnWinningTeam ? match.Winner : (match.Winner === "BlueTeam" ? "RedTeam" : "BlueTeam");
                         const user = match.User
                         // Define the background color based on win/loss
                         const bgColor = isUserOnWinningTeam ? "green.100" : "red.100";
@@ -34,16 +35,16 @@ const MatchesInfo = ({matches=[]}) => {
                                 <strong>Blue Team:</strong>
                                 {match.BlueTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
+                                const champIcon=`https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                                 return (
-                                    <div key={memberIndex} className={userTeam === "BlueTeam" ? "text-blue-600" : ""}>
+                                    <Flex key={memberIndex}>
+                                    <Image src={champIcon} boxSize="10%"/>
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (
                                             memberName
                                         )}
-                                        {" - "}
-                                        {championName}
-                                    </div>
+                                    </Flex>
                                 );
                             })}
                             </Td>
@@ -51,16 +52,16 @@ const MatchesInfo = ({matches=[]}) => {
                                 <strong>Red Team:</strong>
                                 {match.RedTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
+                                const champIcon=`https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                                 return (
-                                    <div key={memberIndex} className={userTeam === "RedTeam" ? "text-red-600" : ""}>
+                                    <Flex key={memberIndex}>
+                                    <Image src={champIcon} boxSize="10%"/>
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (
                                             memberName
                                         )}
-                                        {" - "}
-                                        {championName}
-                                    </div>
+                                    </Flex>
                                 );
                             })}
                             </Td>

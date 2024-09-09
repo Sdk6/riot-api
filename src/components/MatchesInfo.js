@@ -37,8 +37,8 @@ const MatchesInfo = ({matches=[]}) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
                                 const champIcon=`https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                                 return (
-                                    <Flex key={memberIndex}>
-                                    <Image src={champIcon} boxSize="10%"/>
+                                    <Flex key={memberIndex} pt="1">
+                                    <Image src={champIcon} boxSize="9%" mr="2"/>
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (
@@ -54,8 +54,8 @@ const MatchesInfo = ({matches=[]}) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
                                 const champIcon=`https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
                                 return (
-                                    <Flex key={memberIndex}>
-                                    <Image src={champIcon} boxSize="10%"/>
+                                    <Flex key={memberIndex} pt="1">
+                                    <Image src={champIcon} boxSize="9%" mr="2"/>
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (

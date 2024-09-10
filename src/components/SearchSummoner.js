@@ -9,6 +9,8 @@ import {
   } from '@chakra-ui/react'
 import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
+import { APP_BASE_URL } from '../config'
+import { configure } from '@testing-library/react';
 
 
 const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerSoloqueue, summonerFlexqueue, summonerMasteries, summonerMatches }) => {
@@ -29,7 +31,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
         let sID = "";
         let pID = "";
         try {
-            const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName}/${inputTag}`);
+            const response = await fetch(`${APP_BASE_URL}/api/account/${region}/${region2}/${inputInGameName}/${inputTag}`);
             if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
             const result = await response.json();
             console.log(result);
@@ -45,7 +47,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             throw new Error("Summoner Not Found", e);
         }    
         try {
-            const response = await fetch(`/api/summonerinfo/${pID}/${sID}`);
+            const response = await fetch(`${APP_BASE_URL}/api/summonerinfo/${pID}/${sID}`);
             if (!response.ok) {
                 throw new Error("Error reaching /api/summoner ", response.status);
             }

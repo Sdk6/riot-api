@@ -1,13 +1,11 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-
-
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
 import requests
 import sys
-path = '/home/yourusername/mysite'
+path = '/home/skim61491/mysite'
 if path not in sys/path:
     sys.path.append(path)
 

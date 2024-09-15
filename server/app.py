@@ -45,43 +45,44 @@ def get_match_data(match_history, pId):
         "X-Riot-Token": api_key
     }
     for match in match_history:
-            i=0
-            data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"", "GameType":""}
-            match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
-            match_response = requests.get(match_url, headers=headers)
-            match_response.raise_for_status()
-            match_data = match_response.json()
-            participants = match_data['info']
-            if participants['gameMode'] == "CLASSIC":
-                if participants['queueId'] == 400:
-                    data['GameType']="NORMAL DRAFT 5v5"
-                elif participants['queueId'] == 420:
-                    data['GameType']="RANKED SOLO/DUO 5v5"
-                elif participants['queueId'] == 430:
-                    data['GameType']="NORMAL BLIND 5v5"
-                elif participants['queueId'] == 440:
-                    data['GameType']="RANKED FLEX 5v5"
-            else:    
-                data['GameType']=participants['gameMode']
+        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "GameType":"", "MatchID": match}
+        match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
+        match_response = requests.get(match_url, headers=headers)
+        match_response.raise_for_status()
+        match_data = match_response.json()
+        participants = match_data['info']
+        if participants['gameMode'] == "CLASSIC":
+            if participants['queueId'] == 400:
+                data['GameType']="NORMAL DRAFT 5v5"
+            elif participants['queueId'] == 420:
+                data['GameType']="RANKED SOLO/DUO 5v5"
+            elif participants['queueId'] == 430:
+                data['GameType']="NORMAL BLIND 5v5"
+            elif participants['queueId'] == 440:
+                data['GameType']="RANKED FLEX 5v5"
+        else:    
+            data['GameType']=participants['gameMode']
 
-            for participant in participants['participants']:
-                player_name=participant['riotIdGameName']
-                player_champion=participant['championName']
-                player_info={player_name: player_champion}
-                if participant['puuid'] == pId:
-                    data['User']=participant['riotIdGameName']
-                    if participant['win'] == True:
-                        data['Won']=True
-                if participant['teamId']==100:
-                    data['BlueTeam'].append(player_info)
-                    if participant['win'] == True and not data['Winner']:
-                        data['Winner']="BlueTeam"
+        for participant in participants['participants']:
+            player_name=participant['riotIdGameName']
+            player_champion=participant['championName']
+            player_info={player_name: player_champion}
+            if participant['puuid'] == pId:
+                data['User']=participant['riotIdGameName']
+                for i in range(7):
+                    data['UserItems'].append(participant[f"item{i}"])
+                if participant['win'] == True:
+                    data['Won']=True
+            if participant['teamId']==100:
+                data['BlueTeam'].append(player_info)
+                if participant['win'] == True and not data['Winner']:
+                    data['Winner']="BlueTeam"
 
-                else:
-                    data['RedTeam'].append(player_info)
-                    if participant['win'] == True and not data['Winner']:
-                        data['Winner']="RedTeam"
-            matches.append(data)
+            else:
+                data['RedTeam'].append(player_info)
+                if participant['win'] == True and not data['Winner']:
+                    data['Winner']="RedTeam"
+        matches.append(data)
     return matches
 
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')

@@ -7,7 +7,10 @@ import {
     Td,
     TableContainer,
     Image,
-    Flex
+    Flex,
+    Spacer,
+    Text,
+    Box
 } from "@chakra-ui/react"
 
 const MatchesInfo = ({matches=[]}) => {
@@ -21,15 +24,21 @@ const MatchesInfo = ({matches=[]}) => {
                 </Thead>
                 <Tbody>
                     {matches.map((match, index) => {
-                        const isUserOnWinningTeam = match.Won;
                         const user = match.User
+                        const userChampion =`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/champion/${match.UserChampion}.png` 
                         // Define the background color based on win/loss
-                        const bgColor = isUserOnWinningTeam ? "green.100" : "red.100";
+                        const bgColor = match.Won ? "green.100" : "red.100";
+                        const txtColor = match.Won ? "green.900" : "red.900"
 
                         return (
                             <Tr key={index} bg={bgColor}>
-                            <Td>
-                                <strong>{match.GameType}</strong>
+                            <Td><Flex>
+                                <Flex direction="column" align="center">
+                                    <strong>{match.GameType}</strong>
+                                    <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
+                                    <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
+                                </Flex>
+                                <Image pl="10" src={userChampion} /></Flex>
                             </Td>
                             <Td>
                                 <strong>Blue Team:</strong>

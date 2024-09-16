@@ -53,13 +53,15 @@ def get_match_data(match_history, pId):
         participants = match_data['info']
         if participants['gameMode'] == "CLASSIC":
             if participants['queueId'] == 400:
-                data['GameType']="NORMAL DRAFT 5v5"
+                data['GameType']="NORMAL DRAFT"
             elif participants['queueId'] == 420:
-                data['GameType']="RANKED SOLO/DUO 5v5"
+                data['GameType']="RANKED SOLO/DUO"
             elif participants['queueId'] == 430:
-                data['GameType']="NORMAL BLIND 5v5"
+                data['GameType']="NORMAL BLIND"
             elif participants['queueId'] == 440:
-                data['GameType']="RANKED FLEX 5v5"
+                data['GameType']="RANKED FLEX"
+        elif participants['gameMode'] == "CHERRY":
+            data['GameType']="ARENA"
         else:    
             data['GameType']=participants['gameMode']
 

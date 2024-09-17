@@ -28,7 +28,7 @@ const MatchesInfo = ({matches=[]}) => {
                         const userChampion =`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/champion/${match.UserChampion}.png` 
                         // Define the background color based on win/loss
                         const bgColor = match.Won ? "green.100" : "red.100";
-                        const txtColor = match.Won ? "green.900" : "red.900"
+                        const txtColor = match.Won ? "green.600" : "red.600"
 
                         return (
                             <Tr key={index} bg={bgColor}>

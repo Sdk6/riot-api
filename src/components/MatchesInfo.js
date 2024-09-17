@@ -10,7 +10,8 @@ import {
     Flex,
     Spacer,
     Text,
-    Box
+    Box,
+    Center
 } from "@chakra-ui/react"
 
 const MatchesInfo = ({matches=[]}) => {
@@ -32,13 +33,16 @@ const MatchesInfo = ({matches=[]}) => {
 
                         return (
                             <Tr key={index} bg={bgColor}>
-                            <Td><Flex>
-                                <Flex direction="column" align="center" pt="10%">
-                                    <strong>{match.GameType}</strong>
-                                    <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
-                                    <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
+                            <Td>
+                                <Flex>
+                                    <Flex direction="column" align="center" pt="10%">
+                                        <strong>{match.GameType}</strong>
+                                        <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
+                                        <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
+                                    </Flex>
+                                    <Image pl="10" src={userChampion} />
+                                    <Center><Text as="b" ml="5">{match.KDA}</Text></Center>
                                 </Flex>
-                                <Image pl="10" src={userChampion} /></Flex>
                             </Td>
                             <Td>
                                 {match.Winner === "BlueTeam"?(<><strong>Blue Team:</strong> <i>(Victory)</i></>) : (<><strong>Blue Team:</strong> <i>(Defeat)</i></>)}

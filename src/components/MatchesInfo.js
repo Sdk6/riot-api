@@ -41,7 +41,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 <Image pl="10" src={userChampion} /></Flex>
                             </Td>
                             <Td>
-                                <strong>Blue Team:</strong>
+                                {match.Winner === "BlueTeam"?(<><strong>Blue Team:</strong> <i>(Victory)</i></>) : (<><strong>Blue Team:</strong> <i>(Defeat)</i></>)}
                                 {match.BlueTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
                                 const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
@@ -58,7 +58,7 @@ const MatchesInfo = ({matches=[]}) => {
                             })}
                             </Td>
                             <Td>
-                                <strong>Red Team:</strong>
+                                {match.Winner === "RedTeam" ? (<><strong>Red Team:</strong> <i>(Won)</i></>) : (<><strong>Red Team:</strong> <i>(Defeat)</i></>)}
                                 {match.RedTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
                                 //endpoint for fiddlesticks not working properly wtf
@@ -75,7 +75,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 );
                             })}
                             </Td>
-                            <Td>Winner: {match.Winner}</Td>
+                            {/* <Td>Winner: {match.Winner}</Td> */}
                             </Tr>
                         );
                     })}

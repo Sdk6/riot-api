@@ -42,11 +42,11 @@ const MatchesInfo = ({matches=[]}) => {
                                         <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
                                         <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
                                     </Flex>
-                                    <Flex direction="column" >
+                                    <Flex direction="column" ml="10">
                                         <Flex>
-                                            <Image key="UserChampionIcon"  boxSize="120" ml="5" src={userChampion} borderRadius="full"/>
+                                            <Image key="UserChampionIcon"  boxSize="110" ml="5" src={userChampion} borderRadius="full"/>
                                             <Flex key="SummonerSpells" direction="column" ml="2" w="24" >
-                                                <Image key="SummonerSpell1" src={summoner1} boxSize="10" borderRadius="25%" mt="20%"/>
+                                                <Image key="SummonerSpell1" src={summoner1} boxSize="10" borderRadius="25%" mt="13%"/>
                                                 <Image key="SummonerSpell2" src={summoner2} boxSize="10" borderRadius="25%" mt="2%"/>
                                             </Flex>
                                         </Flex>

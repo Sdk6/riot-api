@@ -52,7 +52,7 @@ const MatchesInfo = ({matches=[]}) => {
                                         </Flex>
                                         <Flex mt="2">
                                             <Center>
-                                                {match.UserItems.map((itemNo,index) => {
+                                                {match.UserItems.map((itemNo) => {
                                                     const itemSrc=`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/item/${itemNo}.png`
                                                     const fallback=`graybox.jpg`
                                                     return(

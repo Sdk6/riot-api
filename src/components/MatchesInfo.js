@@ -25,25 +25,36 @@ const MatchesInfo = ({matches=[]}) => {
                 </Thead>
                 <Tbody>
                     {matches.map((match, index) => {
-                        const user = match.User
-                        const userChampion =`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/champion/${match.UserChampion}.png` 
+                        const user = match.User;
+                        const userChampion =`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/champion/${match.UserChampion}.png`;
                         // Define the background color based on win/loss
                         const bgColor = match.Won ? "green.100" : "red.100";
-                        const txtColor = match.Won ? "green.600" : "red.600"
+                        const txtColor = match.Won ? "green.600" : "red.600";
+                        const summoner1= `https://ddragon.leagueoflegends.com/cdn/14.17.1/img/spell/${match.UserSummonerSpells[0]}.png`;
+                        const summoner2= `https://ddragon.leagueoflegends.com/cdn/14.17.1/img/spell/${match.UserSummonerSpells[1]}.png`;
 
                         return (
                             <Tr key={index} bg={bgColor}>
                             <Td>
                                 <Flex>
-                                    <Flex key="GameType/GameResult" direction="column" align="center" pt="10%">
+                                    <Flex key="GameType/GameResult" direction="column" align="center" mt="8%">
                                         <strong>{match.GameType}</strong>
                                         <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
                                         <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
                                     </Flex>
-                                    <Image key="UserChampionIcon" pl="10" src={userChampion} />
+                                    <Flex direction="column" >
+                                        <Flex>
+                                            <Image key="UserChampionIcon"  boxSize="120" ml="5" src={userChampion} borderRadius="full"/>
+                                            <Flex key="SummonerSpells" direction="column" ml="2" w="24" >
+                                                <Image key="SummonerSpell1" src={summoner1} boxSize="10" borderRadius="25%" mt="20%"/>
+                                                <Image key="SummonerSpell2" src={summoner2} boxSize="10" borderRadius="25%" mt="2%"/>
+                                            </Flex>
+                                        </Flex>
+                                        <Center><Text key="KDA" as="b" mt="3">{match.KDA}</Text></Center>
+                                    </Flex>
                                     {/*TODO: send kda as a json and display kills and assists normally but make deaths text color red
                                     use team.map functions below as refrence*/}
-                                    <Center><Text key="KDA" as="b" ml="5">{match.KDA}</Text></Center>
+                                    
                                 </Flex>
                             </Td>
                             <Td>

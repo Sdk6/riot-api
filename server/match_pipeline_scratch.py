@@ -24,5 +24,16 @@ for participant in json['participants']:
         match_data['BlueSide'].append(f"{participant['riotIdGameName']} {participant['riotIdTagline']}")
     else:
         match_data['RedSide'].append(f"{participant['riotIdGameName']} {participant['riotIdTagline']}")
-
-print(match_data)
+SUMMONER_SPELLS = {
+    1: "Cleanse",
+    3: "Exhaust",
+    4: "Flash",
+    6: "Ghost",
+    7: "Heal",
+    11: "Smite",
+    12: "Teleport",
+    13: "Clarity",
+    14: "Ignite",
+    21: "Barrier"
+}
+print(SUMMONER_SPELLS.get(1))

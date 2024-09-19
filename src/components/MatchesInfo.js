@@ -41,6 +41,8 @@ const MatchesInfo = ({matches=[]}) => {
                                         <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
                                     </Flex>
                                     <Image pl="10" src={userChampion} />
+                                    {/*TODO: send kda as a json and display kills and assists normally but make deaths text color red
+                                    use team.map functions below as refrence*/}
                                     <Center><Text as="b" ml="5">{match.KDA}</Text></Center>
                                 </Flex>
                             </Td>

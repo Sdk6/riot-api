@@ -45,7 +45,19 @@ def get_match_data(match_history, pId):
         "X-Riot-Token": api_key
     }
     for match in match_history:
-        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "GameType":"", "MatchID": match, "KDA":""}
+        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "UserSummonerSpells": [], "GameType":"", "MatchID": match, "KDA":""}
+        summoner_spells = {
+            1: "Cleanse",
+            3: "Exhaust",
+            4: "Flash",
+            6: "Ghost",
+            7: "Heal",
+            11: "Smite",
+            12: "Teleport",
+            13: "Clarity",
+            14: "Ignite",
+            21: "Barrier"
+        }
         match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
         match_response = requests.get(match_url, headers=headers)
         match_response.raise_for_status()
@@ -73,6 +85,8 @@ def get_match_data(match_history, pId):
                 data['User']=participant['riotIdGameName']
                 data['UserChampion']=participant['championName']
                 data['KDA']=f"{participant['kills']}/{participant['deaths']}/{participant['assists']}"
+                data['UserSummonerSpells'].append(summoner_spells.get(participant['summoner1Id']))
+                data['UserSummonerSpells'].append(summoner_spells.get(participant['summoner2Id']))
                 for i in range(7):
                     data['UserItems'].append(participant[f"item{i}"])
                 if participant['win'] == True:

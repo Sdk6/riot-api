@@ -42,7 +42,7 @@ const MatchesInfo = ({matches=[]}) => {
                                         <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
                                         <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
                                     </Flex>
-                                    <Flex direction="column" ml="10" mt="2">
+                                    <Flex direction="column" ml="10" mt="2" minW="260">
                                         <Flex>
                                             <Image key="UserChampionIcon"  boxSize="110" ml="5" src={userChampion} borderRadius="full"/>
                                             <Flex key="SummonerSpells" direction="column" ml="2" w="24" >
@@ -50,11 +50,21 @@ const MatchesInfo = ({matches=[]}) => {
                                                 <Image key="SummonerSpell2" src={summoner2} boxSize="10" borderRadius="25%" mt="2%"/>
                                             </Flex>
                                         </Flex>
-                                        <Center><Text key="KDA" as="b" mt="3">{match.KDA}</Text></Center>
+                                        <Flex mt="2">
+                                            <Center>
+                                                {match.UserItems.map((itemNo,index) => {
+                                                    const itemSrc=`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/item/${itemNo}.png`
+                                                    const fallback=`graybox.jpg`
+                                                    return(
+                                                        <Image borderRadius="25%" h="7" w="8" ml="1%" src={itemSrc} fallbackSrc={fallback}></Image>
+                                                    )
+                                                })}
+                                            </Center>
+                                        </Flex>
                                     </Flex>
                                     {/*TODO: send kda as a json and display kills and assists normally but make deaths text color red
                                     use team.map functions below as refrence*/}
-                                    
+                                    <Center><Text key="KDA" as="b" mt="3">{match.KDA}</Text></Center>
                                 </Flex>
                             </Td>
                             <Td>

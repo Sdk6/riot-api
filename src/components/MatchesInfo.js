@@ -37,12 +37,12 @@ const MatchesInfo = ({matches=[]}) => {
                             <Tr key={index} bg={bgColor}>
                             <Td>
                                 <Flex>
-                                    <Flex key="GameType/GameResult" direction="column" align="center" mt="8%">
+                                    <Flex key="GameType/GameResult" direction="column" align="center" mt="9%">
                                         <strong>{match.GameType}</strong>
                                         <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
                                         <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
                                     </Flex>
-                                    <Flex direction="column" ml="10">
+                                    <Flex direction="column" ml="10" mt="2">
                                         <Flex>
                                             <Image key="UserChampionIcon"  boxSize="110" ml="5" src={userChampion} borderRadius="full"/>
                                             <Flex key="SummonerSpells" direction="column" ml="2" w="24" >

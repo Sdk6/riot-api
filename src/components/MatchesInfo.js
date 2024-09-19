@@ -35,15 +35,15 @@ const MatchesInfo = ({matches=[]}) => {
                             <Tr key={index} bg={bgColor}>
                             <Td>
                                 <Flex>
-                                    <Flex direction="column" align="center" pt="10%">
+                                    <Flex key="GameType/GameResult" direction="column" align="center" pt="10%">
                                         <strong>{match.GameType}</strong>
                                         <Box w="80%" h="1px" bg="gray.600" my="15" pr="150" />
                                         <Text color={txtColor}>{match.Won ? (<strong>VICTORY</strong>) : (<strong>DEFEAT</strong>)}</Text>
                                     </Flex>
-                                    <Image pl="10" src={userChampion} />
+                                    <Image key="UserChampionIcon" pl="10" src={userChampion} />
                                     {/*TODO: send kda as a json and display kills and assists normally but make deaths text color red
                                     use team.map functions below as refrence*/}
-                                    <Center><Text as="b" ml="5">{match.KDA}</Text></Center>
+                                    <Center><Text key="KDA" as="b" ml="5">{match.KDA}</Text></Center>
                                 </Flex>
                             </Td>
                             <Td>

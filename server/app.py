@@ -47,16 +47,18 @@ def get_match_data(match_history, pId):
     for match in match_history:
         data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "UserSummonerSpells": [], "GameType":"", "MatchID": match, "KDA":""}
         summoner_spells = {
-            1: "Cleanse",
-            3: "Exhaust",
-            4: "Flash",
-            6: "Ghost",
-            7: "Heal",
-            11: "Smite",
-            12: "Teleport",
-            13: "Clarity",
-            14: "Ignite",
-            21: "Barrier"
+            1: "SummonerBoost",#Cleanse
+            3: "SummonerExhaust",#Exhaust
+            4: "SummonerFlash",#Flash
+            6: "SummonerHaste",#Ghost
+            7: "SummonerHeal",#Heal
+            11: "SummonerSmite",#Smite
+            12: "SummonerTeleport",#Teleport
+            13: "SummonerMana",#Clarity
+            14: "SummonerDot",#Ignite
+            21: "SummonerBarrier",#Barrier
+            32: "SummonerSnowball"#Mark/ARAM-Snowball
+
         }
         match_url=f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}"
         match_response = requests.get(match_url, headers=headers)

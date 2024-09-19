@@ -57,7 +57,7 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
                     <MasteryInfo masteries={summonerInfo.masteries}/>
                     
                 </Flex>
-                <Spacer w="1%" />
+                <Spacer w="1%" pl={2} />
                 <Flex direction="column" bg="gray.400" minW="64.5%">
                     <MatchesInfo matches={summonerInfo.matches}/>
                 </Flex>

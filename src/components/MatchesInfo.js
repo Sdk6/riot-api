@@ -17,13 +17,13 @@ import {
 const MatchesInfo = ({matches=[]}) => {
     return(
         <TableContainer>
-            <Table variant="simple">
-                <Thead>
+            <Table variant="simple" bg="#648bee">
+                <Thead bg="gray.400">
                     <Tr>
                         <Th colSpan={matches.length}>Recent Matches:</Th>
                     </Tr>  
                 </Thead>
-                <Tbody>
+                <Tbody >
                     {matches.map((match, index) => {
                         const user = match.User;
                         const userChampion =`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/champion/${match.UserChampion}.png`;
@@ -34,6 +34,7 @@ const MatchesInfo = ({matches=[]}) => {
                         const summoner2= `https://ddragon.leagueoflegends.com/cdn/14.17.1/img/spell/${match.UserSummonerSpells[1]}.png`;
 
                         return (
+                            <>
                             <Tr key={index} bg={bgColor}>
                             <Td>
                                 <Flex>
@@ -103,7 +104,10 @@ const MatchesInfo = ({matches=[]}) => {
                             })}
                             </Td>
                             {/* <Td>Winner: {match.Winner}</Td> */}
+                            
                             </Tr>
+                            <Spacer mb={1}/>
+                            </>
                         );
                     })}
                 </Tbody>

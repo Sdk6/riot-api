@@ -106,7 +106,7 @@ const MatchesInfo = ({matches=[]}) => {
                             {/* <Td>Winner: {match.Winner}</Td> */}
                             
                             </Tr>
-                            <Spacer mb={1}/>
+                            <Spacer mb={2}/>
                             </>
                         );
                     })}

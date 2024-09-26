@@ -136,10 +136,26 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
                 'profileIconId': summoners_data['profileIconId']
             }
         }
+
+        # Mongo db test insert
+        # Create a simple document to send to MongoDB
+        # document = {"test": "success"}
+
+        # Insert the document into MongoDB
+        # result = db.summoners.insert_one(document)
+
+        # Add the MongoDB insertion result to the response
+        # response_data['mongodb_insertion'] = {
+        #     'success': True,
+        #     'inserted_id': str(result.inserted_id)
+        # }
+
         return jsonify(response_data)
         #return jsonify(summoners_data)
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 @app.route('/api/summonerinfo/<puuid>/<summonerId>')
 def get_summoner_rank_masteries_match_history(puuid, summonerId):

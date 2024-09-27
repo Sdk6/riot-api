@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
+from pymongo.errors import DuplicateKeyError
 import requests
 
 load_dotenv()
@@ -12,6 +13,7 @@ api_key = os.getenv('RIOT_API_KEY')
 mongodb_uri = os.getenv('MONGODB_URI')
 client = MongoClient(mongodb_uri)
 db = client.python_riot_api
+db.summoners.create_index("name", unique=True)
 
 @app.route('/api/hello')
 def hello():
@@ -105,6 +107,36 @@ def get_match_data(match_history, pId):
         matches.append(data)
     return matches
 
+def insert_summoner_to_mongo(document):
+    try:
+        # Use the 'name' field as the unique identifier
+        name = document.get('name')
+        if not name:
+            app.logger.error("Document is missing 'name' field")
+            return
+
+        # Prepare update operation
+        update_operation = {}
+        for key, value in document.items():
+            if key != 'name':  # 'name' is our unique identifier, so we don't update it
+                update_operation[key] = value
+
+        result = db.summoners.update_one(
+            {"name": name},
+            {"$set": update_operation},
+            upsert=True
+        )
+
+        if result.upserted_id:
+            app.logger.info(f"New document inserted with ID: {result.upserted_id}")
+        else:
+            app.logger.info(f"Existing document updated for name: {name}")
+
+    except DuplicateKeyError:
+        app.logger.error(f"Duplicate key error for name: {name}")
+    except Exception as e:
+        app.logger.error(f"Error during upsert: {str(e)}")
+
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')
 def get_account_by_name_and_tag(region,region2, gameName, tag):
     #Riot endpoint for accountv1 using name and tag
@@ -128,6 +160,7 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         #app.logger.info(summoners_response.json())
 
         response_data = {
+            'name': f"{gameName} #{tag}",
             'summonerLevel': summoners_data['summonerLevel'],
             'ids': {
                 'puuid': summoners_data['puuid'],
@@ -139,17 +172,16 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
 
         # Mongo db test insert
         # Create a simple document to send to MongoDB
-        # document = {"test": "success"}
+        # document = {"test1": "success"}
 
         # Insert the document into MongoDB
-        # result = db.summoners.insert_one(document)
-
+        
         # Add the MongoDB insertion result to the response
         # response_data['mongodb_insertion'] = {
         #     'success': True,
         #     'inserted_id': str(result.inserted_id)
         # }
-
+        insert_summoner_to_mongo(response_data)
         return jsonify(response_data)
         #return jsonify(summoners_data)
     except requests.exceptions.RequestException as e:
@@ -157,12 +189,12 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-@app.route('/api/summonerinfo/<puuid>/<summonerId>')
-def get_summoner_rank_masteries_match_history(puuid, summonerId):
+@app.route('/api/summonerinfo/<puuid>/<summonerId>/<gameName>/<tag>')
+def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag):
     headers={
         "X-Riot-Token": api_key
     }
-    response_data={}
+    response_data={'name': f"{gameName} #{tag}"}
     champIds={}
     try:  
         champIds= get_championIds()
@@ -209,6 +241,8 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId):
                 "flexqueue": ranked_tiers.get("RANKED_FLEX_SR", "Unranked")
         }
         response_data["matches"]=matches
+        response_data["name"]=f"{gameName} #{tag}"
+        insert_summoner_to_mongo(response_data)
         #app.logger.info(f"masteries ")
         return jsonify(response_data)
     except requests.exceptions.RequestException as e:

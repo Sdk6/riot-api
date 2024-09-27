@@ -45,7 +45,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             throw new Error("Summoner Not Found", e);
         }    
         try {
-            const response = await fetch(`/api/summonerinfo/${pID}/${sID}`);
+            const response = await fetch(`/api/summonerinfo/${pID}/${sID}/${inputInGameName}/${inputTag}`);
             if (!response.ok) {
                 throw new Error("Error reaching /api/summoner ", response.status);
             }

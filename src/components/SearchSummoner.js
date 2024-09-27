@@ -29,7 +29,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
         let sID = "";
         let pID = "";
         try {
-            const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName}/${inputTag}`);
+            const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
             if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
             const result = await response.json();
             console.log(result);
@@ -45,7 +45,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             throw new Error("Summoner Not Found", e);
         }    
         try {
-            const response = await fetch(`/api/summonerinfo/${pID}/${sID}/${inputInGameName}/${inputTag}`);
+            const response = await fetch(`/api/summonerinfo/${pID}/${sID}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
             if (!response.ok) {
                 throw new Error("Error reaching /api/summoner ", response.status);
             }

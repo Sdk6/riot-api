@@ -23,7 +23,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
     const [summonerLevel, setSummonerLevel] = useState("");
 
     const fetchAccount = async () =>{
-        console.log(`bla: ${region} ${inGameName} ${tag}`);
+        console.log(`region/region2: ${region}/${inputRegion}\t name+tag: ${inputInGameName} ${inputTag}`);
         loadingTrue();
         successfulFalse();
         summonerNotFound();

@@ -75,10 +75,11 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                         value={region}
                         bg="white"
                         onChange={(e) => setRegion(e.target.value)}>
-                        <option value="americas">NA</option>
-                        <option value="europe">Europe</option>
-                        <option value="asia">Asia</option>
-                        <option value="esports">Esports</option>
+                        <option value="na1">NA</option>
+                        <option value="eun1">EUNE</option>
+                        <option value="euw1">EUW</option>
+                        <option value="kr1">Korea</option>
+                        <option value="jp1">Japan</option>
                     </Select>
                     <Input
                         id="inGameName"

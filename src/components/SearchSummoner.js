@@ -22,7 +22,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
     const [summonerIcon, setSummonerIcon] = useState("");
     const [summonerLevel, setSummonerLevel] = useState("");
 
-    const fetchHello = async () =>{
+    const fetchAccount = async () =>{
         console.log(`bla: ${region} ${inGameName} ${tag}`);
         loadingTrue();
         successfulFalse();
@@ -110,7 +110,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                         w='30%'
                         onChange={(e) => setInputTag(e.target.value)}
                     />
-                    <Button bg='gray' onClick={fetchHello} w="10%">
+                    <Button bg='gray' onClick={fetchAccount} w="10%">
                         Search
                     </Button>
                 </HStack>

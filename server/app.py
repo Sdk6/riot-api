@@ -159,10 +159,8 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
         accounts_data = api_request(f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tag}?")
 
         #summoner-v4 endpoint for id's
-        summoners_url=f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}"
-        summoners_response = requests.get(summoners_url, headers=headers)
-        summoners_response.raise_for_status()
-        summoners_data = summoners_response.json()
+        summoners_data = api_request(f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}")
+
         #app.logger.info(summoners_response.json())
 
         response_data = {

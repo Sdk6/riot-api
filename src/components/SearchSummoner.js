@@ -78,8 +78,8 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                         <option value="na1">NA</option>
                         <option value="eun1">EUNE</option>
                         <option value="euw1">EUW</option>
-                        <option value="kr1">Korea</option>
-                        <option value="jp1">Japan</option>
+                        <option value="kr1">KOREA</option>
+                        <option value="jp1">JAPAN</option>
                     </Select>
                     <Input
                         id="inGameName"

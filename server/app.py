@@ -137,6 +137,11 @@ def insert_summoner_to_mongo(document):
     except Exception as e:
         app.logger.error(f"Error during upsert: {str(e)}")
 
+def api_request(endpoint:str):
+    headers={
+        "X-Riot-Token": api_key
+    }
+
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')
 def get_account_by_name_and_tag(region,region2, gameName, tag):
     #Riot endpoint for accountv1 using name and tag

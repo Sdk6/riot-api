@@ -141,21 +141,22 @@ def api_request(endpoint:str):
     headers={
         "X-Riot-Token": api_key
     }
+    try:
+        api_response = requests.get(endpoint, headers=headers)
+        api_response.raise_for_status()
+        app.logger.info(f"API request to {endpoint} successful. Status code: {api_response.status_code}")
+        return api_response.json()
+    
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')
 def get_account_by_name_and_tag(region,region2, gameName, tag):
-    #Riot endpoint for accountv1 using name and tag
-    accounts_url=f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tag}?"
-    headers={
-        "X-Riot-Token": api_key
-    }
-
     try:
         #account-v1 endpoint gamename and tag to get puuid
-        accounts_response = requests.get(accounts_url, headers=headers)
-        accounts_response.raise_for_status()
-        app.logger.info(f"accounts response status code: {accounts_response.status_code}")
-        accounts_data = accounts_response.json()
+        accounts_data = api_request(f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tag}?")
 
         #summoner-v4 endpoint for id's
         summoners_url=f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}"

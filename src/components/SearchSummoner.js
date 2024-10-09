@@ -13,23 +13,24 @@ import DisplaySummoner from './DisplaySummoner';
 
 const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTrue, loadingFalse, successfulTrue, successfulFalse, summonerNotFound, summonerSoloqueue, summonerFlexqueue, summonerMasteries, summonerMatches }) => {
     const [region, setRegion] = useState("americas");
-    const [region2, setRegion2] = useState("na1")
+    const [region2, setRegion2] = useState("")
     const [inGameName, setInGameName] = useState("");
     const [tag, setTag] = useState("");
+    const [inputRegion, setInputRegion] = useState("na1")
     const [inputInGameName, setInputInGameName] = useState("");
     const [inputTag, setInputTag] = useState("");
     const [summonerIcon, setSummonerIcon] = useState("");
     const [summonerLevel, setSummonerLevel] = useState("");
 
     const fetchHello = async () =>{
-        console.log(`${region} ${inGameName} ${tag}`);
+        console.log(`bla: ${region} ${inGameName} ${tag}`);
         loadingTrue();
         successfulFalse();
         summonerNotFound();
         let sID = "";
         let pID = "";
         try {
-            const response = await fetch(`/api/account/${region}/${region2}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
+            const response = await fetch(`/api/account/${region}/${inputRegion}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
             if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
             const result = await response.json();
             console.log(result);
@@ -37,6 +38,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             setSummonerLevel(result.summonerLevel);
             setInGameName(inputInGameName);
             setTag(inputTag);
+            setRegion2(inputRegion)
             handleSearchResult(result.ids.puuid,result.ids.summonerId);
             pID=result.ids.puuid;
             sID=result.ids.summonerId;
@@ -72,11 +74,11 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                     <Select 
                         w="10%" 
                         id="region" 
-                        value={region}
+                        value={inputRegion}
                         bg="white"
                         onChange={(e) => {
                             const reg2 = e.target.value;
-                            setRegion2(reg2);
+                            setInputRegion(reg2);
                             const regionMap = {
                                 euw1: "europe",
                                 eun1: "europe",

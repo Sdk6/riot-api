@@ -74,7 +74,18 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                         id="region" 
                         value={region}
                         bg="white"
-                        onChange={(e) => setRegion(e.target.value)}>
+                        onChange={(e) => {
+                            const reg2 = e.target.value;
+                            setRegion2(reg2);
+                            const regionMap = {
+                                euw1: "europe",
+                                eun1: "europe",
+                                na1: "americas",
+                                kr1: "asia",
+                                jp1: "asia"
+                            };
+                            setRegion(regionMap[reg2]);
+                        }}>
                         <option value="na1">NA</option>
                         <option value="eun1">EUNE</option>
                         <option value="euw1">EUW</option>

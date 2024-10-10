@@ -56,7 +56,7 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             sID=result.ids.summonerId;
         } catch(e) {
             successfulFalse();
-            throw new Error("Summoner Not Found", e);
+            throw new Error(`Summoner Not Found${e}`, e);
         }    
         try {
             const response = await fetch(`/api/summonerinfo/${pID}/${sID}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);

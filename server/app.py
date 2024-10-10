@@ -157,12 +157,10 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
     try:
         #account-v1 endpoint gamename and tag to get puuid
         accounts_data = api_request(f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tag}?")
-
+        # app.logger.info(f"summoners_data url: https://{region2}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}")
         #summoner-v4 endpoint for id's
-        summoners_data = api_request(f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}")
-
-        #app.logger.info(summoners_response.json())
-
+        summoners_data = api_request(f"https://{region2}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}")
+        
         response_data = {
             'name': f"{gameName} #{tag}",
             'summonerLevel': summoners_data['summonerLevel'],
@@ -191,6 +189,7 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
     except Exception as e:
+        app.logger.info(f"e: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 @app.route('/api/summonerinfo/<puuid>/<summonerId>/<gameName>/<tag>')

@@ -1,12 +1,18 @@
 import {
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem, 
     HStack,
     FormControl,
-    Select,
+    Text,
     Input,
     Flex,
     Center,
-    Button
+    Button,
+    Image
   } from '@chakra-ui/react'
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {useState} from "react"
 import DisplaySummoner from './DisplaySummoner';
 
@@ -21,7 +27,13 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
     const [inputTag, setInputTag] = useState("");
     const [summonerIcon, setSummonerIcon] = useState("");
     const [summonerLevel, setSummonerLevel] = useState("");
-
+    const regionOptions = [
+        { value: "na1", label: "NA", image: "Regions/NA.jpg" },
+        { value: "eun1", label: "EUNE", image: "Regions/EUROPENORDIC.jpg" },
+        { value: "euw1", label: "EUW", image: "Regions/EUROPE.jpg" },
+        { value: "kr1", label: "KOREA", image: "Regions/KOREA.jpg" },
+        { value: "jp1", label: "JAPAN", image: "Regions/JAPAN.jpg" },
+      ];
     const fetchAccount = async () =>{
         console.log(`region/region2: ${region}/${inputRegion}\t name+tag: ${inputInGameName} ${inputTag}`);
         loadingTrue();
@@ -71,29 +83,34 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
         <Flex alignItems="center" minH="6vh" bg="#4299e1" px="0.5%">
             <FormControl>
                 <HStack spacing="2" minW="100%">
-                    <Select 
-                        w="10%" 
-                        id="region" 
-                        value={inputRegion}
-                        bg="white"
-                        onChange={(e) => {
-                            const reg2 = e.target.value;
-                            setInputRegion(reg2);
-                            const regionMap = {
-                                euw1: "europe",
-                                eun1: "europe",
-                                na1: "americas",
-                                kr1: "asia",
-                                jp1: "asia"
-                            };
-                            setRegion(regionMap[reg2]);
-                        }}>
-                        <option value="na1">NA</option>
-                        <option value="eun1">EUNE</option>
-                        <option value="euw1">EUW</option>
-                        <option value="kr1">KOREA</option>
-                        <option value="jp1">JAPAN</option>
-                    </Select>
+                <Menu>
+  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} w="10%" bg="white" variant="filled">
+    {inputRegion ? regionOptions.find(opt => opt.value === inputRegion)?.label : "Select Region"}
+  </MenuButton>
+  <MenuList>
+    {regionOptions.map((option) => (
+      <MenuItem 
+        key={option.value} 
+        onClick={() => {
+          setInputRegion(option.value);
+          const regionMap = {
+            euw1: "europe",
+            eun1: "europe",
+            na1: "americas",
+            kr1: "asia",
+            jp1: "asia"
+          };
+          setRegion(regionMap[option.value]);
+        }}
+      >
+        <Flex alignItems="center">
+          <Image src={option.image} boxSize="20px" mr={2} />
+          <Text>{option.label}</Text>
+        </Flex>
+      </MenuItem>
+    ))}
+  </MenuList>
+</Menu>
                     <Input
                         id="inGameName"
                         value={inputInGameName}

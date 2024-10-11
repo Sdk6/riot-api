@@ -72,7 +72,7 @@ def get_match_data(match_history, pId, region):
                 data['GameType']="NORMAL DRAFT"
             elif participants['queueId'] == 420:
                 data['GameType']="RANKED SOLO/DUO"
-            elif participants['queueId'] == 430:
+            elif participants['queueId'] == 430 or participants['queueId'] == 490:
                 data['GameType']="NORMAL BLIND"
             elif participants['queueId'] == 440:
                 data['GameType']="RANKED FLEX"

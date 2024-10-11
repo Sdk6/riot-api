@@ -47,7 +47,7 @@ const MatchesInfo = ({matches=[]}) => {
                                         <Flex>
                                             <Image key="UserChampionIcon"  boxSize="110" ml="5" src={userChampion} borderRadius="full"/>
                                             <Flex key="SummonerSpells" direction="column" ml="2" w="24" >
-                                                <Image key="SummonerSpell1" src={summoner1} boxSize="10" borderRadius="25%" mt="13%"/>
+                                                <Image key="SummonerSpell1" src={summoner1} fallbackSrc="graybox.jpg" boxSize="10" borderRadius="25%" mt="13%"/>
                                                 <Image key="SummonerSpell2" src={summoner2} boxSize="10" borderRadius="25%" mt="2%"/>
                                             </Flex>
                                         </Flex>

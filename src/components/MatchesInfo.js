@@ -86,7 +86,7 @@ const MatchesInfo = ({matches=[]}) => {
                             })}
                             </Td>
                             <Td>
-                                {match.Winner === "RedTeam" ? (<><strong>Red Team:</strong> <i>(Won)</i></>) : (<><strong>Red Team:</strong> <i>(Defeat)</i></>)}
+                                {match.Winner === "RedTeam" ? (<><strong>Red Team:</strong> <i>(Victory)</i></>) : (<><strong>Red Team:</strong> <i>(Defeat)</i></>)}
                                 {match.RedTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
                                 //endpoint for fiddlesticks not working properly wtf

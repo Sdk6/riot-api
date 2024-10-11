@@ -194,9 +194,6 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
 
 @app.route('/api/summonerinfo/<puuid>/<summonerId>/<gameName>/<tag>/<region>/<region2>')
 def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,region,region2):
-    headers={
-        "X-Riot-Token": api_key
-    }
     response_data={'name': f"{gameName} #{tag}"}
     champIds={}
     try:  
@@ -205,10 +202,8 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,r
         app.logger.error(f"unable to fetch champ ids\nerror: {e}")
     try: 
         #masteries
-        masteries_url=f"https://{region2}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top"
-        masteries_response = requests.get(masteries_url, headers=headers)
-        masteries_response.raise_for_status()
-        masteries_data = masteries_response.json()
+        masteries_data=api_request(f"https://{region2}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top")
+        
         champion_masteries=[]
         for key in masteries_data:
             champion= champIds[str(key['championId'])]
@@ -218,10 +213,7 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,r
         response_data['masteries']=champion_masteries
     
         #rank
-        ranks_url=f"https://{region2}.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}"
-        ranks_response = requests.get(ranks_url, headers=headers)
-        ranks_response.raise_for_status()
-        ranks_data = ranks_response.json()
+        ranks_data=api_request(f"https://{region2}.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}")
         ranked_tiers={}
         for item in ranks_data:
             if item['queueType'] in ['RANKED_FLEX_SR', 'RANKED_SOLO_5x5']:
@@ -229,10 +221,7 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,r
         #app.logger.info(f"ranks api status: {ranks_response}")
 
         #matches
-        matches_url=f"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=20"
-        matches_response = requests.get(matches_url, headers=headers)
-        matches_response.raise_for_status()
-        matches_data = matches_response.json()
+        matches_data=api_request(f"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=20")
         # app.logger.info(matches_data)
 
         # match details
@@ -246,7 +235,6 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,r
         response_data["name"]=f"{gameName} #{tag}"
         insert_summoner_to_mongo(response_data)
         #app.logger.info(f"masteries ")
-        app.logger.info("\nright before return\n")
         return jsonify(response_data)
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500

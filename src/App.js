@@ -1,10 +1,13 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
-import SearchSummoner from './components/SearchSummoner.js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import Banner from './components/Banner.js';
+import HomePage from './components/HomePage/HomePage.js'
+import SearchSummoner from './components/SearchSummoner.js';
 import DisplaySummonerInfo from './components/DisplaySummonerInfo.js';
 import '@fontsource/nunito'
-import { useState } from 'react';
+
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -91,3 +94,40 @@ function App() {
 }
 
 export default App;
+// return (
+//   <ChakraProvider>
+//     <Banner />
+//     <SearchSummoner 
+//       handleSearchResult={handleSearchResult}
+//       isLoading={isLoading}
+//       isSuccessful={isSuccessful}
+//       loadingTrue={loadingTrue}
+//       loadingFalse={loadingFalse}
+//       successfulTrue={successfulTrue}
+//       successfulFalse={successfulFalse}
+//       summonerNotFound={summonerNotFound}
+//       summonerSoloqueue={summonerSoloqueue}
+//       summonerFlexqueue={summonerFlexqueue}
+//       summonerMasteries={summonerMasteries}
+//       summonerMatches={summonerMatches}
+//       />
+//     {summonerInfo.found &&(
+//     <DisplaySummonerInfo
+//       summonerInfo={summonerInfo}
+//       isLoading={isLoading}
+//       isSuccessful={isSuccessful}
+//     />
+//   )}
+//   </ChakraProvider>
+// );
+
+// return (
+//   <ChakraProvider>
+//     <Banner />
+//     <Router>
+//       <Routes>
+//         <Route path="/" element={<HomePage />} />
+//       </Routes>
+//     </Router>
+//   </ChakraProvider>
+// );

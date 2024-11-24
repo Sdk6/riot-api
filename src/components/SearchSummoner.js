@@ -84,33 +84,33 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
             <FormControl>
                 <HStack spacing="2" minW="100%">
                 <Menu>
-  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} w="10%" bg="white" variant="filled">
-    {inputRegion ? regionOptions.find(opt => opt.value === inputRegion)?.label : "Select Region"}
-  </MenuButton>
-  <MenuList>
-    {regionOptions.map((option) => (
-      <MenuItem 
-        key={option.value} 
-        onClick={() => {
-          setInputRegion(option.value);
-          const regionMap = {
-            euw1: "europe",
-            eun1: "europe",
-            na1: "americas",
-            kr1: "asia",
-            jp1: "asia"
-          };
-          setRegion(regionMap[option.value]);
-        }}
-      >
-        <Flex alignItems="center">
-          <Image src={option.image} boxSize="20px" mr={2} />
-          <Text>{option.label}</Text>
-        </Flex>
-      </MenuItem>
-    ))}
-  </MenuList>
-</Menu>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} w="10%" bg="white" variant="filled">
+                    {inputRegion ? regionOptions.find(opt => opt.value === inputRegion)?.label : "Select Region"}
+                  </MenuButton>
+                  <MenuList>
+                    {regionOptions.map((option) => (
+                      <MenuItem 
+                        key={option.value} 
+                        onClick={() => {
+                          setInputRegion(option.value);
+                          const regionMap = {
+                            euw1: "europe",
+                            eun1: "europe",
+                            na1: "americas",
+                            kr1: "asia",
+                            jp1: "asia"
+                          };
+                          setRegion(regionMap[option.value]);
+                        }}
+                      >
+                        <Flex alignItems="center">
+                          <Image src={option.image} boxSize="20px" mr={2} />
+                          <Text>{option.label}</Text>
+                        </Flex>
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
                     <Input
                         id="inGameName"
                         value={inputInGameName}
@@ -133,12 +133,15 @@ const SearchSummoner = ({handleSearchResult, isLoading, isSuccessful, loadingTru
                 </HStack>
             </FormControl>
         </Flex>
-    {isLoading && <Center><Button
-                    isLoading
-                    loadingText='Loading'
-                    colorScheme='#ECC94B'
-                    color="black"
-                    /></Center>
+    {isLoading && 
+    <Center>
+      <Button
+        isLoading
+        loadingText='Loading'
+        colorScheme='#ECC94B'
+        color="black"
+        />
+    </Center>
     }
     {!isLoading && isSuccessful && (
         <DisplaySummoner 

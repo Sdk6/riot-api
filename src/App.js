@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Banner from './components/Banner.js';
 import HomePage from './components/HomePage/HomePage.js'
+import SearchForm from './components/SearchForm.js'
 import SearchSummoner from './components/SearchSummoner.js';
 import DisplaySummonerInfo from './components/DisplaySummonerInfo.js';
 import '@fontsource/nunito'

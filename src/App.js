@@ -2,11 +2,8 @@ import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
-import Banner from './components/Banner.js';
 import HomePage from './components/HomePage/HomePage.js'
-import SearchForm from './components/SearchForm.js'
-import SearchSummoner from './components/SearchSummoner.js';
-import DisplaySummonerInfo from './components/DisplaySummonerInfo.js';
+import SummonerPage from './components/SummonerPage/SummonerPage.js';
 import '@fontsource/nunito'
 
 function App() {
@@ -66,30 +63,54 @@ function App() {
       summonerId: sId
     });
   };
+
   return (
     <ChakraProvider>
-      <Banner />
-      <SearchSummoner 
-        handleSearchResult={handleSearchResult}
-        isLoading={isLoading}
-        isSuccessful={isSuccessful}
-        loadingTrue={loadingTrue}
-        loadingFalse={loadingFalse}
-        successfulTrue={successfulTrue}
-        successfulFalse={successfulFalse}
-        summonerNotFound={summonerNotFound}
-        summonerSoloqueue={summonerSoloqueue}
-        summonerFlexqueue={summonerFlexqueue}
-        summonerMasteries={summonerMasteries}
-        summonerMatches={summonerMatches}
-        />
-      {summonerInfo.found &&(
-      <DisplaySummonerInfo
-        summonerInfo={summonerInfo}
-        isLoading={isLoading}
-        isSuccessful={isSuccessful}
-      />
-    )}
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route 
+            path="/summoner"
+            element={
+              <SummonerPage
+                handleSearchResult={handleSearchResult}
+                isLoading={isLoading}
+                isSuccessful={isSuccessful}
+                loadingTrue={loadingTrue}
+                loadingFalse={loadingFalse}
+                successfulTrue={successfulTrue}
+                successfulFalse={successfulFalse}
+                summonerNotFound={summonerNotFound}
+                summonerSoloqueue={summonerSoloqueue}
+                summonerFlexqueue={summonerFlexqueue}
+                summonerMasteries={summonerMasteries}
+                summonerMatches={summonerMatches}
+                summonerInfo={summonerInfo}
+              />
+            } 
+          />
+          <Route 
+            path="/summoner/:region/:name" 
+            element={
+              <SummonerPage
+                handleSearchResult={handleSearchResult}
+                isLoading={isLoading}
+                isSuccessful={isSuccessful}
+                loadingTrue={loadingTrue}
+                loadingFalse={loadingFalse}
+                successfulTrue={successfulTrue}
+                successfulFalse={successfulFalse}
+                summonerNotFound={summonerNotFound}
+                summonerSoloqueue={summonerSoloqueue}
+                summonerFlexqueue={summonerFlexqueue}
+                summonerMasteries={summonerMasteries}
+                summonerMatches={summonerMatches}
+                summonerInfo={summonerInfo}
+              />
+            }
+          />
+        </Routes>
+      </Router>
     </ChakraProvider>
   );
 }

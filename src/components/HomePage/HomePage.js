@@ -9,6 +9,7 @@ const HomePage = () => {
         <>
         <Banner minW="100%"/>
         <Flex bg="#000e1">
+            
         </Flex>
         </>
     )

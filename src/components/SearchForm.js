@@ -14,7 +14,7 @@ import {
   import { ChevronDownIcon } from "@chakra-ui/icons";
   import { useState } from "react"
 
-  const SearchForm = ({onSearch}) => {
+  const SearchForm = ({onSearch, size, color, border}) => {
     const [region, setRegion] = useState("americas");
     const [inputRegion, setInputRegion] = useState("na1");
     const [inputInGameName, setInputInGameName] = useState("");
@@ -38,9 +38,9 @@ import {
     };
 
     return(
-        <Flex alignItems="center" minH="6vh" bg="#4299e1" px="0.5">
+        <Flex alignItems="center" minH="6vh" bg={color} px="0.5" borderRadius="md">
             <FormControl>
-                <HStack spacing="2" minW="100%">
+                <HStack spacing="2" minW={size}>
                     <Menu>
                         <MenuButton as={Button} rightIcon={<ChevronDownIcon />} w="10%" bg="white" variant="filled">
                             {inputRegion ? regionOptions.find(opt => opt.value === inputRegion)?.label : "Select Region"}

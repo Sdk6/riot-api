@@ -71,7 +71,7 @@ const SearchSummoner = ({
 
     return (
         <>
-        <SearchForm onSearch={fetchAccount} />
+        <SearchForm onSearch={fetchAccount} size="100%" color="#4299e1" />
 
         {isLoading && 
           <Center>

@@ -47,15 +47,15 @@ const MatchesInfo = ({matches=[]}) => {
                                         <Flex>
                                             <Image key="UserChampionIcon"  boxSize="110" ml="5" src={userChampion} borderRadius="full"/>
                                             <Flex key="SummonerSpells" direction="column" ml="2" w="24" >
-                                                <Image key="SummonerSpell1" src={summoner1} fallbackSrc="graybox.jpg" boxSize="10" borderRadius="25%" mt="13%"/>
-                                                <Image key="SummonerSpell2" src={summoner2} fallbackSrc="graybox.jpg" boxSize="10" borderRadius="25%" mt="2%"/>
+                                                <Image key="SummonerSpell1" src={summoner1} fallbackSrc="/graybox.jpg" boxSize="10" borderRadius="25%" mt="13%"/>
+                                                <Image key="SummonerSpell2" src={summoner2} fallbackSrc="/graybox.jpg" boxSize="10" borderRadius="25%" mt="2%"/>
                                             </Flex>
                                         </Flex>
                                         <Flex mt="2">
                                             <Center>
                                                 {match.UserItems.map((itemNo) => {
                                                     const itemSrc=`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/item/${itemNo}.png`
-                                                    const fallback=`graybox.jpg`
+                                                    const fallback=`/graybox.jpg`
                                                     return(
                                                         <Image borderRadius="25%" h="7" w="8" ml="1%" src={itemSrc} fallbackSrc={fallback}></Image>
                                                     )

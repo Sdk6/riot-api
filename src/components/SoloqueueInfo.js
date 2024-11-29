@@ -16,7 +16,7 @@ import {
 const SoloqueueInfo = ({rank}) => {
     let tier=rank.split(' ')[0].toUpperCase();
     if (tier === "UNRANKED")  tier="IRON";
-    const rankIcon=`RankedEmblems/${tier}.png`;
+    const rankIcon=`/RankedEmblems/${tier}.png`;
     return(
         <TableContainer>
             <Table variant="simple">

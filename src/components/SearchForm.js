@@ -14,18 +14,18 @@ import {
   import { ChevronDownIcon } from "@chakra-ui/icons";
   import { useState } from "react"
 
-  const SearchForm = ({onSearch, size, color, border}) => {
+  const SearchForm = ({onSearch, size, color, border, reg, nam, tg}) => {
     const [region, setRegion] = useState("americas");
     const [inputRegion, setInputRegion] = useState("na1");
     const [inputInGameName, setInputInGameName] = useState("");
     const [inputTag, setInputTag]= useState("");
 
     const regionOptions = [
-        { value: "na1", label: "NA", image: "Regions/NA.jpg" },
-        { value: "eun1", label: "EUNE", image: "Regions/EUROPENORDIC.jpg" },
-        { value: "euw1", label: "EUW", image: "Regions/EUROPE.jpg" },
-        { value: "kr1", label: "KOREA", image: "Regions/KOREA.jpg" },
-        { value: "jp1", label: "JAPAN", image: "Regions/JAPAN.jpg" },
+        { value: "na1", label: "NA", image: "/Regions/NA.jpg" },
+        { value: "eun1", label: "EUNE", image: "/Regions/EUROPENORDIC.jpg" },
+        { value: "euw1", label: "EUW", image: "/Regions/EUROPE.jpg" },
+        { value: "kr1", label: "KOREA", image: "/Regions/KOREA.jpg" },
+        { value: "jp1", label: "JAPAN", image: "/Regions/JAPAN.jpg" },
       ];
 
     const handleSubmit= () => {

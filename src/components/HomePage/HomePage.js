@@ -25,7 +25,7 @@ const HomePage = () => {
             >
                 <Center minW="100%">
                     <VStack>
-                        <Image src="controller.jpg" boxSize="100"/>
+                        <Image src="controller.JPG" minW="450" minH="280" maxH="280"/>
                         <SearchForm size="60vw" color="#4299e1"/>      
                     </VStack>
                 </Center>

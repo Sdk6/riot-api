@@ -1,5 +1,6 @@
 import { Center, Button } from '@chakra-ui/react'
-import {useState} from "react"
+import { useState, useEffect} from "react"
+import { useParams } from 'react-router-dom';
 import DisplaySummoner from './DisplaySummoner';
 import SearchForm from './SearchForm';
 
@@ -22,51 +23,99 @@ const SearchSummoner = ({
     const [tag, setTag] = useState("");
     const [summonerIcon, setSummonerIcon] = useState("");
     const [summonerLevel, setSummonerLevel] = useState("");
-    
-    const fetchAccount = async (searchData) =>{
-        const {region, inputRegion, inputInGameName, inputTag} = searchData;
-        console.log(`region/region2: ${region}/${inputRegion}\t name+tag: ${inputInGameName} ${inputTag}`);
+    const {qName, qTag, qRegion, qRegion2} = useParams();
+    const fetchUrl = async (region, inputRegion, inputInGameName, inputTag) => {
+      try {
+        const response = await fetch(`/api/account/${region}/${inputRegion}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
+        if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
+        const result = await response.json();
+        console.log(result);
+        setSummonerIcon(result.ids.profileIconId);
+        setSummonerLevel(result.summonerLevel);
+        setInGameName(inputInGameName);
+        setTag(inputTag);
+        setRegion2(inputRegion)
+        handleSearchResult(result.ids.puuid,result.ids.summonerId);
+        // pID=result.ids.puuid;
+        // sID=result.ids.summonerId;
+    // } catch(e) {
+    //     successfulFalse();
+    //     throw new Error(`Summoner Not Found${e}`, e);
+    // }    
+    // try {
+        const info_response = await fetch(`/api/summonerinfo/${result.ids.puuid}/${result.ids.summonerId}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}/${region}/${inputRegion}`);
+        if (!info_response.ok) {
+            throw new Error("Error reaching /api/summoner ", response.status);
+        }
+        const info_result = await info_response.json();
+        console.log(info_result);
+        summonerSoloqueue(info_result.ranks.soloqueue);
+        summonerFlexqueue(info_result.ranks.flexqueue);
+        summonerMasteries(info_result.masteries);
+        summonerMatches(info_result.matches);
+        successfulTrue();
+    } 
+      catch (e) {
+        successfulFalse();
+        console.error(e);
+    } finally {
+        loadingFalse();
+    };
+    }
+
+    useEffect(() => {
+      if (qName && qTag && qRegion && qRegion2) {
         loadingTrue();
         successfulFalse();
         summonerNotFound();
-        // let sID = "";
-        // let pID = "";
-        try {
-            const response = await fetch(`/api/account/${region}/${inputRegion}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
-            if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
-            const result = await response.json();
-            console.log(result);
-            setSummonerIcon(result.ids.profileIconId);
-            setSummonerLevel(result.summonerLevel);
-            setInGameName(inputInGameName);
-            setTag(inputTag);
-            setRegion2(inputRegion)
-            handleSearchResult(result.ids.puuid,result.ids.summonerId);
-            // pID=result.ids.puuid;
-            // sID=result.ids.summonerId;
-        // } catch(e) {
-        //     successfulFalse();
-        //     throw new Error(`Summoner Not Found${e}`, e);
-        // }    
-        // try {
-            const info_response = await fetch(`/api/summonerinfo/${result.ids.puuid}/${result.ids.summonerId}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}/${region}/${inputRegion}`);
-            if (!info_response.ok) {
-                throw new Error("Error reaching /api/summoner ", response.status);
-            }
-            const info_result = await info_response.json();
-            console.log(info_result);
-            summonerSoloqueue(info_result.ranks.soloqueue);
-            summonerFlexqueue(info_result.ranks.flexqueue);
-            summonerMasteries(info_result.masteries);
-            summonerMatches(info_result.matches);
-            successfulTrue();
-        } 
-          catch (e) {
-            successfulFalse();
-            console.error(e);
-        } finally {
-            loadingFalse();
-        };
+        fetchUrl(qRegion, qRegion2, qName, qTag);
+      }
+    }, [qName, qTag, qRegion, qRegion2]); 
+      const fetchAccount = async (searchData) =>{
+      const {region, inputRegion, inputInGameName, inputTag} = searchData;
+      console.log(`butts:${qName} ${qTag} ${qRegion}\n`)
+      console.log(`region/region2: ${region}/${inputRegion}\t name+tag: ${inputInGameName} ${inputTag}`);
+      loadingTrue();
+      successfulFalse();
+      summonerNotFound();
+      // let sID = "";
+      // let pID = "";
+      try {
+          const response = await fetch(`/api/account/${region}/${inputRegion}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}`);
+          if (!response.ok) throw new Error("Error reaching /api/account ", response.status);
+          const result = await response.json();
+          console.log(result);
+          setSummonerIcon(result.ids.profileIconId);
+          setSummonerLevel(result.summonerLevel);
+          setInGameName(inputInGameName);
+          setTag(inputTag);
+          setRegion2(inputRegion)
+          handleSearchResult(result.ids.puuid,result.ids.summonerId);
+          // pID=result.ids.puuid;
+          // sID=result.ids.summonerId;
+      // } catch(e) {
+      //     successfulFalse();
+      //     throw new Error(`Summoner Not Found${e}`, e);
+      // }    
+      // try {
+          const info_response = await fetch(`/api/summonerinfo/${result.ids.puuid}/${result.ids.summonerId}/${inputInGameName.toLowerCase()}/${inputTag.toLowerCase()}/${region}/${inputRegion}`);
+          if (!info_response.ok) {
+              throw new Error("Error reaching /api/summoner ", response.status);
+          }
+          const info_result = await info_response.json();
+          console.log(info_result);
+          summonerSoloqueue(info_result.ranks.soloqueue);
+          summonerFlexqueue(info_result.ranks.flexqueue);
+          summonerMasteries(info_result.masteries);
+          summonerMatches(info_result.matches);
+          successfulTrue();
+      } 
+        catch (e) {
+          successfulFalse();
+          console.error(e);
+      } finally {
+          loadingFalse();
+      };
     }
 
     return (

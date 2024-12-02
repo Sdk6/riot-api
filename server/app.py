@@ -148,16 +148,18 @@ def api_request(endpoint:str):
         return api_response.json()
     
     except requests.exceptions.RequestException as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(f"Request error for {endpoint}: {str(e)}")
+        raise Exception(f"API request failed: {str(e)}")
     except Exception as e:
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+        app.logger.error(f"Error for {endpoint}: {str(e)}")
+        raise Exception(f"An error occurred: {str(e)}")
 
 @app.route('/api/account/<region>/<region2>/<gameName>/<tag>')
-def get_account_by_name_and_tag(region,region2, gameName, tag):
+def get_account_by_name_and_tag(region, region2, gameName, tag):
     try:
         #account-v1 endpoint gamename and tag to get puuid
         accounts_data = api_request(f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tag}?")
-        # app.logger.info(f"summoners_data url: https://{region2}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}")
+        
         #summoner-v4 endpoint for id's
         summoners_data = api_request(f"https://{region2}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{accounts_data['puuid']}")
         
@@ -172,25 +174,12 @@ def get_account_by_name_and_tag(region,region2, gameName, tag):
             }
         }
 
-        # Mongo db test insert
-        # Create a simple document to send to MongoDB
-        # document = {"test1": "success"}
-
-        # Insert the document into MongoDB
-        
-        # Add the MongoDB insertion result to the response
-        # response_data['mongodb_insertion'] = {
-        #     'success': True,
-        #     'inserted_id': str(result.inserted_id)
-        # }
         insert_summoner_to_mongo(response_data)
         return jsonify(response_data)
-        #return jsonify(summoners_data)
-    except requests.exceptions.RequestException as e:
-        return jsonify({"error": str(e)}), 500
+
     except Exception as e:
-        app.logger.info(f"e: {e}")
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+        app.logger.error(f"Error in get_account_by_name_and_tag: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/summonerinfo/<puuid>/<summonerId>/<gameName>/<tag>/<region>/<region2>')
 def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,region,region2):

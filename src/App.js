@@ -90,7 +90,7 @@ function App() {
             } 
           />
           <Route 
-            path="/:qRegion/:qRegion2/:qName/:qTag" 
+            path="summoner/:qRegion/:qRegion2/:qName/:qTag" 
             element={
               <SummonerPage
                 handleSearchResult={handleSearchResult}

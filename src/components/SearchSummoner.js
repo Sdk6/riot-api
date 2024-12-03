@@ -3,6 +3,7 @@ import { useState, useEffect} from "react"
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import DisplaySummoner from './DisplaySummoner';
 import SearchForm from './SearchForm';
+import Footer from './Footer';
 
 
 const SearchSummoner = ({
@@ -141,6 +142,7 @@ const SearchSummoner = ({
             region={summonerData.region}
           />
         )}
+        <Footer />
     </>
     )
 };

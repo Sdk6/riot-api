@@ -5,11 +5,31 @@ import {
     Center,
     Box
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import Banner from "../Banner";
 import SearchForm from "../SearchForm";
 import Footer from "../Footer";
 
-const HomePage = () => {
+const HomePage = ({
+    handleSearchResult,
+    isLoading,
+    isSuccessful,
+    loadingTrue,
+    loadingFalse,
+    successfulTrue,
+    successfulFalse,
+    summonerNotFound,
+    summonerSoloqueue,
+    summonerFlexqueue,
+    summonerMasteries,
+    summonerMatches }) => {
+    const navigate = useNavigate();
+    
+    const handleSearch = (searchData) => {
+        const { region, inputRegion, inputInGameName, inputTag} = searchData;
+        navigate(`/summoner/${region}/${inputRegion}/${inputInGameName}/${inputTag}`);
+    }
+    
     return (
         <Flex 
             minH="100vh"
@@ -26,7 +46,7 @@ const HomePage = () => {
                 <Center minW="100%">
                     <VStack>
                         <Image src="controller.JPG" minW="450" minH="280" maxH="280"/>
-                        <SearchForm size="60vw" color="#4299e1"/>      
+                        <SearchForm size="60vw" color="#4299e1" onSearch={handleSearch}/>      
                     </VStack>
                 </Center>
             </Flex>

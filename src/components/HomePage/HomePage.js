@@ -10,19 +10,7 @@ import Banner from "../Banner";
 import SearchForm from "../SearchForm";
 import Footer from "../Footer";
 
-const HomePage = ({
-    handleSearchResult,
-    isLoading,
-    isSuccessful,
-    loadingTrue,
-    loadingFalse,
-    successfulTrue,
-    successfulFalse,
-    summonerNotFound,
-    summonerSoloqueue,
-    summonerFlexqueue,
-    summonerMasteries,
-    summonerMatches }) => {
+const HomePage = () => {
     const navigate = useNavigate();
     
     const handleSearch = (searchData) => {

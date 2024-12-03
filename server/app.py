@@ -19,14 +19,17 @@ db.summoners.create_index("name", unique=True)
 def hello():
     return jsonify(message="Hello from python server!")
 
+def get_version():
+    version_url='https://ddragon.leagueoflegends.com/api/versions.json'
+    version_response=requests.get(version_url)
+    version_response.raise_for_status()
+    version = version_response.json()
+    return version[0]
+
 def get_championIds():
     try:
         champIds={}
-        version_url='https://ddragon.leagueoflegends.com/api/versions.json'
-        version_response=requests.get(version_url)
-        version_response.raise_for_status()
-        version = version_response.json()
-        latest_version = version[0]
+        latest_version = get_version()
 
         champions_url=f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion.json"
         champions_response=requests.get(champions_url)
@@ -46,8 +49,9 @@ def get_match_data(match_history, pId, region):
     headers={
         "X-Riot-Token": api_key
     }
+    version = get_version()
     for match in match_history:
-        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "UserSummonerSpells": [], "GameType":"", "MatchID": match, "KDA":""}
+        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "UserSummonerSpells": [], "GameType":"", "MatchID": match, "KDA":"", "Version":version}
         summoner_spells = {
             1: "SummonerBoost",#Cleanse
             3: "SummonerExhaust",#Exhaust

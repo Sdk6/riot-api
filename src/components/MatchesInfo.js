@@ -26,12 +26,13 @@ const MatchesInfo = ({matches=[]}) => {
                 <Tbody >
                     {matches.map((match, index) => {
                         const user = match.User;
-                        const userChampion =`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/champion/${match.UserChampion}.png`;
+                        const version = match.Version;
+                        const userChampion =`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${match.UserChampion}.png`;
                         // Define the background color based on win/loss
                         const bgColor = match.Won ? "green.100" : "red.100";
                         const txtColor = match.Won ? "green.600" : "red.600";
-                        const summoner1= `https://ddragon.leagueoflegends.com/cdn/14.17.1/img/spell/${match.UserSummonerSpells[0]}.png`;
-                        const summoner2= `https://ddragon.leagueoflegends.com/cdn/14.17.1/img/spell/${match.UserSummonerSpells[1]}.png`;
+                        const summoner1= `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${match.UserSummonerSpells[0]}.png`;
+                        const summoner2= `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${match.UserSummonerSpells[1]}.png`;
 
                         return (
                             <>
@@ -54,7 +55,7 @@ const MatchesInfo = ({matches=[]}) => {
                                         <Flex mt="2">
                                             <Center>
                                                 {match.UserItems.map((itemNo) => {
-                                                    const itemSrc=`https://ddragon.leagueoflegends.com/cdn/14.17.1/img/item/${itemNo}.png`
+                                                    const itemSrc=`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemNo}.png`
                                                     const fallback=`/graybox.jpg`
                                                     return(
                                                         <Image borderRadius="25%" h="7" w="8" ml="1%" src={itemSrc} fallbackSrc={fallback}></Image>
@@ -72,7 +73,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 {match.Winner === "BlueTeam"?(<><strong>Blue Team:</strong> <i>(Victory)</i></>) : (<><strong>Blue Team:</strong> <i>(Defeat)</i></>)}
                                 {match.BlueTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
-                                const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
+                                const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
                                     <Image src={champIcon} boxSize="6" mr="2"/>
@@ -90,7 +91,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 {match.RedTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
                                 //endpoint for fiddlesticks not working properly wtf
-                                const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/14.16.1/img/champion/${championName}.png`
+                                const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
                                     <Image src={champIcon} boxSize="6" mr="2"/>

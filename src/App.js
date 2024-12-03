@@ -68,24 +68,7 @@ function App() {
     <ChakraProvider>
       <Router>
         <Routes>
-          <Route path="/" element={
-            <HomePage 
-              handleSearchResult={handleSearchResult}
-              isLoading={isLoading}
-              isSuccessful={isSuccessful}
-              loadingTrue={loadingTrue}
-              loadingFalse={loadingFalse}
-              successfulTrue={successfulTrue}
-              successfulFalse={successfulFalse}
-              summonerNotFound={summonerNotFound}
-              summonerSoloqueue={summonerSoloqueue}
-              summonerFlexqueue={summonerFlexqueue}
-              summonerMasteries={summonerMasteries}
-              summonerMatches={summonerMatches}
-              summonerInfo={summonerInfo}
-            />} 
-            
-          />
+          <Route path="/" element={ <HomePage /> } />
           <Route 
             path="/summoner"
             element={

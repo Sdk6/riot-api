@@ -1,4 +1,4 @@
-import { Center, Button } from '@chakra-ui/react'
+import { Center, Button, Flex } from '@chakra-ui/react'
 import { useState, useEffect} from "react"
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import DisplaySummoner from './DisplaySummoner';
@@ -142,7 +142,6 @@ const SearchSummoner = ({
             region={summonerData.region}
           />
         )}
-        <Footer />
     </>
     )
 };

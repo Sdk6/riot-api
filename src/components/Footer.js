@@ -15,7 +15,7 @@ const Footer = () => {
         <Flex
             bg="black"
             w="100%"
-            position="fixed"
+            position="static"
             bottom="0"
             py={2}
             px={4}

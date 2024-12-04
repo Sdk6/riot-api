@@ -6,6 +6,7 @@ import SoloqueueInfo from './SoloqueueInfo';
 import FlexqueueInfo from './FlexqueueInfo';
 import MasteryInfo from './MasteryInfo';
 import MatchesInfo from './MatchesInfo';
+import Footer from './Footer'
 const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
     // const fetchSummonerData = async () => {
     //     const response = await fetch(`/api/summonerinfo/${puuid}/${summonerId}`);
@@ -48,6 +49,7 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
         <>
         {isLoading && <p></p>}
         {!isLoading && isSuccessful && (
+            <>
             <Flex mt=".5%" ml=".5%" mr=".5%">
                 <Flex direction="column" bg="gray.400" minW="34.5%" alignSelf="flex-start">
                     <SoloqueueInfo rank={summonerInfo.soloqueue}/>
@@ -62,6 +64,8 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
                     <MatchesInfo matches={summonerInfo.matches}/>
                 </Flex>
             </Flex>
+            <Footer />
+            </>
         )}
         </>
       );

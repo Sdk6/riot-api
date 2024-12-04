@@ -51,7 +51,7 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
         {!isLoading && isSuccessful && (
             <>
             <Flex mt=".5%" ml=".5%" mr=".5%">
-                <Flex direction="column" bg="gray.400" minW="34.5%" alignSelf="flex-start">
+                <Flex direction="column" bg="gray.400" minW="32.5%" alignSelf="flex-start">
                     <SoloqueueInfo rank={summonerInfo.soloqueue}/>
                     <Spacer bg="#648bee" pt={5}/>
                     <FlexqueueInfo rank={summonerInfo.flexqueue}/>
@@ -60,7 +60,7 @@ const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
                     
                 </Flex>
                 <Spacer w="1%" pl={2} />
-                <Flex direction="column" bg="gray.400" minW="64.5%">
+                <Flex direction="column" bg="gray.400" minW="63.5%">
                     <MatchesInfo matches={summonerInfo.matches}/>
                 </Flex>
             </Flex>

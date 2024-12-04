@@ -11,6 +11,7 @@ import {
     Spacer,
     Text,
     Box,
+    Link,
     Center
 } from "@chakra-ui/react"
 
@@ -73,6 +74,7 @@ const MatchesInfo = ({matches=[]}) => {
                                 {match.Winner === "BlueTeam"?(<><strong>Blue Team:</strong> <i>(Victory)</i></>) : (<><strong>Blue Team:</strong> <i>(Defeat)</i></>)}
                                 {match.BlueTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
+                                const lnk = `/summoner/americas/na1/${memberName}/na1`
                                 const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
@@ -80,7 +82,7 @@ const MatchesInfo = ({matches=[]}) => {
                                         {memberName === user ? (
                                             <strong>{memberName}</strong>
                                         ) : (
-                                            memberName
+                                            <Link href={lnk}>{memberName}</Link>
                                         )}
                                     </Flex>
                                 );

@@ -44,14 +44,14 @@ def get_championIds():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
-def get_match_data(match_history, pId, region):
+def get_match_data(match_history, pId, region, region2):
     matches=[]
     headers={
         "X-Riot-Token": api_key
     }
     version = get_version()
     for match in match_history:
-        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "UserSummonerSpells": [], "GameType":"", "MatchID": match, "KDA":"", "Version":version}
+        data={"RedTeam":[], "BlueTeam":[], "Winner": "", "Won":False, "User":"","UserItems":[], "UserChampion":"", "UserSummonerSpells": [], "GameType":"", "MatchID": match, "KDA":"", "Version":version, "Region": region, "Region2": region2}
         summoner_spells = {
             1: "SummonerBoost",#Cleanse
             3: "SummonerExhaust",#Exhaust
@@ -67,6 +67,7 @@ def get_match_data(match_history, pId, region):
 
         }
         match_url=f"https://{region}.api.riotgames.com/lol/match/v5/matches/{match}"
+        # app.logger.info(f"butts {match_url}")
         match_response = requests.get(match_url, headers=headers)
         match_response.raise_for_status()
         match_data = match_response.json()
@@ -86,7 +87,7 @@ def get_match_data(match_history, pId, region):
             data['GameType']=participants['gameMode']
 
         for participant in participants['participants']:
-            player_name=participant['riotIdGameName']
+            player_name=f"{participant['riotIdGameName']} #{participant['riotIdTagline']}"
             player_champion=participant['championName']
             player_info={player_name: player_champion}
             if participant['puuid'] == pId:
@@ -218,7 +219,7 @@ def get_summoner_rank_masteries_match_history(puuid, summonerId, gameName, tag,r
         # app.logger.info(matches_data)
 
         # match details
-        matches=get_match_data(matches_data, puuid, region)
+        matches=get_match_data(matches_data, puuid, region, region2)
 
         response_data["ranks"]={
                 "soloqueue": ranked_tiers.get("RANKED_SOLO_5x5", "Unranked"),

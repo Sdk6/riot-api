@@ -1,9 +1,8 @@
 import { Center, Button, Flex } from '@chakra-ui/react'
 import { useState, useEffect} from "react"
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
-import DisplaySummoner from './DisplaySummoner';
-import SearchForm from './SearchForm';
-import Footer from './Footer';
+import DisplaySummoner from './DisplaySummoner/DisplaySummoner';
+import SearchForm from '../../SearchForm';
 
 
 const SearchSummoner = ({

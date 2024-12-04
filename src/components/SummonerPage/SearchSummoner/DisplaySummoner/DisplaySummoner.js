@@ -5,9 +5,8 @@ import {
     Spacer
   } from '@chakra-ui/react'
 // import {useState, useEffect} from "react"
-import SummonerIcon from './SummonerIcon'
+import SummonerIcon from './SummonerIcon/SummonerIcon'
 const DisplaySummoner = ({summoner, summonerIcon, summonerLevel, region}) => {
-
     return (
         <Flex bg="blackAlpha.900">
             <Box align="center">

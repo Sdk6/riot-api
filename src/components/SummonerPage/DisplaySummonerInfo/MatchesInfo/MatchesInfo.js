@@ -16,6 +16,19 @@ import {
 } from "@chakra-ui/react"
 
 const MatchesInfo = ({matches=[]}) => {
+    const parseNameTag = (str) => {
+        if (!str.includes('#')) {
+          throw new Error('String must contain a hashtag');
+        }
+        
+        const [name, tag] = str.split('#').map(part => part.trim());
+        
+        if (!name || !tag) {
+          throw new Error('Both name and tag must be present');
+        }
+        
+        return { name, tag };
+    }
     return(
         <TableContainer>
             <Table variant="simple" bg="#648bee">
@@ -26,6 +39,8 @@ const MatchesInfo = ({matches=[]}) => {
                 </Thead>
                 <Tbody >
                     {matches.map((match, index) => {
+                        const region = match.Region;
+                        const region2 = match.Region2;
                         const user = match.User;
                         const version = match.Version;
                         const userChampion =`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${match.UserChampion}.png`;
@@ -74,15 +89,16 @@ const MatchesInfo = ({matches=[]}) => {
                                 {match.Winner === "BlueTeam"?(<><strong>Blue Team:</strong> <i>(Victory)</i></>) : (<><strong>Blue Team:</strong> <i>(Defeat)</i></>)}
                                 {match.BlueTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
-                                const lnk = `/summoner/americas/na1/${memberName}/na1`
+                                const { name, tag } = parseNameTag(memberName)
+                                const lnk = `/summoner/${region}/${region2}/${name}/${tag}`
                                 const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
                                     <Image src={champIcon} boxSize="6" mr="2"/>
-                                        {memberName === user ? (
-                                            <strong>{memberName}</strong>
+                                        {name === user ? (
+                                            <strong>{name}</strong>
                                         ) : (
-                                            <Link href={lnk}>{memberName}</Link>
+                                            <Link href={lnk}>{name}</Link>
                                         )}
                                     </Flex>
                                 );
@@ -92,15 +108,17 @@ const MatchesInfo = ({matches=[]}) => {
                                 {match.Winner === "RedTeam" ? (<><strong>Red Team:</strong> <i>(Victory)</i></>) : (<><strong>Red Team:</strong> <i>(Defeat)</i></>)}
                                 {match.RedTeam.map((memberObj, memberIndex) => {
                                 const [memberName, championName] = Object.entries(memberObj)[0];
+                                const { name, tag } = parseNameTag(memberName)
+                                const lnk = `/summoner/${region}/${region2}/${name}/${tag}`
                                 //endpoint for fiddlesticks not working properly wtf
                                 const champIcon= championName==="FiddleSticks" ? `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/Fiddlesticks.png`: `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championName}.png`
                                 return (
                                     <Flex key={memberIndex} pt="1">
                                     <Image src={champIcon} boxSize="6" mr="2"/>
-                                        {memberName === user ? (
-                                            <strong>{memberName}</strong>
+                                        {name === user ? (
+                                            <strong>{name}</strong>
                                         ) : (
-                                            memberName
+                                           <Link href={lnk}>{name}</Link> 
                                         )}
                                     </Flex>
                                 );

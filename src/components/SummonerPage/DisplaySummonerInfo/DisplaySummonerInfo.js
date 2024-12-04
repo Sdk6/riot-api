@@ -2,11 +2,11 @@ import{
     Flex,
     Spacer
 } from '@chakra-ui/react'
-import SoloqueueInfo from './SoloqueueInfo';
-import FlexqueueInfo from './FlexqueueInfo';
-import MasteryInfo from './MasteryInfo';
-import MatchesInfo from './MatchesInfo';
-import Footer from './Footer'
+import SoloqueueInfo from './SoloqueueInfo/SoloqueueInfo';
+import FlexqueueInfo from './FlexqueueInfo/FlexqueueInfo';
+import MasteryInfo from './MasteryInfo/MasteryInfo';
+import MatchesInfo from './MatchesInfo/MatchesInfo';
+import Footer from '../../Footer'
 const DisplaySummonerInfo = ({summonerInfo, isLoading, isSuccessful}) => {
     // const fetchSummonerData = async () => {
     //     const response = await fetch(`/api/summonerinfo/${puuid}/${summonerId}`);

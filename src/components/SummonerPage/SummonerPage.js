@@ -1,6 +1,6 @@
 import Banner from '../Banner';
-import SearchSummoner from '../SearchSummoner';
-import DisplaySummonerInfo from '../DisplaySummonerInfo';
+import SearchSummoner from './SearchSummoner/SearchSummoner';
+import DisplaySummonerInfo from './DisplaySummonerInfo/DisplaySummonerInfo';
 
 const SummonerPage = ({
   handleSearchResult,

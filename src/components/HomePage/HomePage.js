@@ -2,15 +2,14 @@ import {
     Image,
     VStack,
     Flex,
-    Center,
-    Box
+    Center
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Banner from "../Banner";
 import SearchForm from "../SearchForm";
 import Footer from "../Footer";
 
-const HomePage = () => {
+const HomePage = ({ cancelFetch }) => {
     const navigate = useNavigate();
     
     const handleSearch = (searchData) => {
@@ -25,7 +24,7 @@ const HomePage = () => {
             position="relative"
             
         >
-            <Banner minW="100%"/>
+            <Banner minW="100%" cancelFetch={cancelFetch}/>
             <Flex 
                 minW="100vw" 
                 alignContent="center" 

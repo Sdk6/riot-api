@@ -3,6 +3,8 @@ import SearchSummoner from './SearchSummoner/SearchSummoner';
 import DisplaySummonerInfo from './DisplaySummonerInfo/DisplaySummonerInfo';
 
 const SummonerPage = ({
+  abortController,
+  cancelFetch,
   handleSearchResult,
   isLoading,
   isSuccessful,
@@ -19,8 +21,9 @@ const SummonerPage = ({
 }) => {
   return (
     <>
-      <Banner />
+      <Banner cancelFetch={cancelFetch}/>
       <SearchSummoner
+        abortController={abortController}
         handleSearchResult={handleSearchResult}
         isLoading={isLoading}
         isSuccessful={isSuccessful}

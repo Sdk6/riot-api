@@ -1,11 +1,13 @@
-import { Center, Button, Flex } from '@chakra-ui/react'
-import { useState, useEffect} from "react"
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import { Center, Button } from '@chakra-ui/react'
+import { useState, useEffect, useRef} from "react"
+import { useParams, useNavigate } from 'react-router-dom';
 import DisplaySummoner from './DisplaySummoner/DisplaySummoner';
 import SearchForm from '../../SearchForm';
 
 
 const SearchSummoner = ({
+  abortController,
+  cancelFetch,
   handleSearchResult,
   isLoading,
   isSuccessful,
@@ -27,17 +29,21 @@ const SearchSummoner = ({
     });
     const {qName, qTag, qRegion, qRegion2} = useParams();
     const navigate = useNavigate();
+    const reqMade = useRef(false);
 
     const fetchSummonerData = async (region, inputRegion, name, tag) =>{
       // console.log(`butts:${qName} ${qTag} ${qRegion}\n`)
       // console.log(`region/region2: ${region}/${inputRegion}\t name+tag: ${inputInGameName} ${inputTag}`);
+      navigate(`/summoner/${region}/${inputRegion}/${name}/${tag}`);
       loadingTrue();
       successfulFalse();
       summonerNotFound();
 
       try {
         //Fetch account data
-        const accountResponse = await fetch(`/api/account/${region}/${inputRegion}/${name.toLowerCase()}/${tag.toLowerCase()}`);
+        const accountResponse = await fetch(`/api/account/${region}/${inputRegion}/${name.toLowerCase()}/${tag.toLowerCase()}`,{
+          signal: abortController.signal
+        });
         if (!accountResponse.ok) throw new Error("Error reaching account data ", accountResponse.status);
         
         const accountData = await accountResponse.json();
@@ -56,7 +62,9 @@ const SearchSummoner = ({
         handleSearchResult(accountData.ids.puuid, accountData.ids.summonerId);
         
         // Fetch Summoner Info
-        const infoResponse = await fetch(`/api/summonerinfo/${accountData.ids.puuid}/${accountData.ids.summonerId}/${name.toLowerCase()}/${tag.toLowerCase()}/${region}/${inputRegion}`);
+        const infoResponse = await fetch(`/api/summonerinfo/${accountData.ids.puuid}/${accountData.ids.summonerId}/${name.toLowerCase()}/${tag.toLowerCase()}/${region}/${inputRegion}`,{
+          signal: abortController.signal
+        });
         if (!infoResponse.ok) {
           throw new Error("Error retrieving summoner information");
         }
@@ -85,6 +93,10 @@ const SearchSummoner = ({
         }
       } 
       catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted');
+          return;
+        }
         console.error("Error in fetchSummonerData:", error);
         successfulFalse();
       } finally {
@@ -93,15 +105,13 @@ const SearchSummoner = ({
     };
 
     useEffect(() => {
-      if (qName && qRegion && qTag && qRegion2) {
-        // Only fetch if we don't already have the data for this summoner
-        if (!summonerData.name || 
-            summonerData.name.toLowerCase() !== qName.toLowerCase() || 
-            summonerData.tag.toLowerCase() !== qTag.toLowerCase() ||
-            summonerData.region !== qRegion2) {
-          fetchSummonerData(qRegion, qRegion2, qName, qTag);
-        }
+      if (qName && qRegion && qTag && qRegion2 && !reqMade.current) {
+        reqMade.current = true;
+        fetchSummonerData(qRegion, qRegion2, qName, qTag);
       }
+      return () =>{
+        reqMade.current = false;
+      };
     }, [qName, qTag, qRegion, qRegion2]);
     
     const handleSearch = (searchData) => {

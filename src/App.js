@@ -63,16 +63,23 @@ function App() {
       summonerId: sId
     });
   };
+  const [abortController,setAbortController] = useState(new AbortController());
+  const cancelFetch = () => {
+    abortController.abort();
+    setAbortController(new AbortController())
+  };
 
   return (
     <ChakraProvider>
       <Router>
         <Routes>
-          <Route path="/" element={ <HomePage /> } />
+          <Route path="/" element={ <HomePage cancelFetch={cancelFetch}/> } />
           <Route 
             path="/summoner"
             element={
               <SummonerPage
+                abortController={abortController}
+                cancelFetch={cancelFetch}
                 handleSearchResult={handleSearchResult}
                 isLoading={isLoading}
                 isSuccessful={isSuccessful}
@@ -93,6 +100,8 @@ function App() {
             path="summoner/:qRegion/:qRegion2/:qName/:qTag" 
             element={
               <SummonerPage
+                abortController={abortController}
+                cancelFetch={cancelFetch}
                 handleSearchResult={handleSearchResult}
                 isLoading={isLoading}
                 isSuccessful={isSuccessful}
